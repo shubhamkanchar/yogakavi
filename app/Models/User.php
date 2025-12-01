@@ -55,4 +55,14 @@ class User extends Authenticatable
     {
         return $this->role === 'user';
     }
+
+    public function dietLeads() 
+    {
+        return $this->hasOne(DietLead::class);
+    }
+    
+    public function yogaLeads() 
+    {
+        return $this->hasOne(YogaLead::class);
+    }
 }
