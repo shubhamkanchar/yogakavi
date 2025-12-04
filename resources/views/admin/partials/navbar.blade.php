@@ -7,7 +7,7 @@
             <i class="bi bi-list fs-4"></i>
         </button>
 
-        <a class="navbar-brand fw-bold" href="#">Admin Panel</a>
+        <a class="navbar-brand fw-bold" href="{{ route('welcome') }}">{{ env('APP_NAME') }}</a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
             <span class="navbar-toggler-icon"></span>
@@ -33,13 +33,13 @@
         <div class="collapse navbar-collapse" id="navmenu">
 
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="#diet" class="nav-link">Diet Plan</a>
                 </li>
 
                 <li class="nav-item">
                     <a href="{{ route('form.yoga') }}" class="nav-link">Yoga Batch</a>
-                </li>
+                </li> --}}
 
                 {{-- Guest Links --}}
                 @guest
@@ -56,10 +56,13 @@
                     <li class="nav-item dropdown ms-3">
                         <a class="nav-link dropdown-toggle fw-bold" href="#" id="userDropdown" role="button"
                             data-bs-toggle="dropdown">
-                            {{ Auth::user()->name }}
+                            {{ Auth::user()->full_name }}
                         </a>
 
                         <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <a class="dropdown-item" href="{{ route('admin.dashboard') }}">Dashboard</a>
+                            </li>
                             <li>
                                 <a class="dropdown-item" href="#"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

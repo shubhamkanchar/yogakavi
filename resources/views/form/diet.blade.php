@@ -5,23 +5,37 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">Health & Diet Intake Form</div>
+                    <div class="card-header h3">Health & Diet Intake Form</div>
                     <div class="card-body">
                         <form id="fullForm" method="POST" action="{{ route('diet.lead') }}" novalidate>
                             @csrf
-                            <!-- Email -->
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
-                                <input id="email" name="email" type="email" class="form-control"
-                                    placeholder="name@example.com">
+                            <div class="row">
+                                <div class="mb-3 col-md-6">
+                                    <label for="firstName" class="form-label">First Name <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" id="firstName" name="first_name" class="form-control" required>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label for="LastName" class="form-label">Last Name <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" id="LastName" name="last_name" class="form-control" required>
+                                </div>
                             </div>
 
-                            <!-- Name -->
                             <div class="mb-3">
-                                <label for="name" class="form-label">Full Name <span
-                                        class="text-danger">*</span></label>
-                                <input id="name" name="name" type="text" class="form-control"
-                                    placeholder="Your full name">
+                                <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                                <input type="email" id="email" name="email" class="form-control" required>
+                            </div>
+
+                            <div class="row">
+                                <div class="mb-3 col-md-6">
+                                    <label for="password" class="col-form-label">{{ __('Password') }}</label>
+                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="password-confirm" class="col-form-label">{{ __('Confirm Password') }}</label>
+                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                </div>
                             </div>
 
                             <div class="row gx-3">
@@ -47,6 +61,12 @@
                                     <input id="age" name="age" type="number" min="1" class="form-control"
                                         placeholder="e.g. 30">
                                 </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="phone" class="form-label">Phone (optional)</label>
+                                <input id="phone" name="phone" type="tel" class="form-control"
+                                    placeholder="10-digit phone number">
                             </div>
 
                             <!-- Past Surgery -->
@@ -135,12 +155,7 @@
                                 </select>
                             </div>
 
-                            <!-- Optional: phone and notes -->
-                            <div class="mb-3">
-                                <label for="phone" class="form-label">Phone (optional)</label>
-                                <input id="phone" name="phone" type="tel" class="form-control"
-                                    placeholder="10-digit phone number">
-                            </div>
+                            
 
                             <div class="mb-4">
                                 <label for="notes" class="form-label">Any additional notes (optional)</label>
@@ -149,7 +164,6 @@
 
                             <div class="d-flex gap-2">
                                 <button type="submit" class="btn btn-primary">Submit</button>
-                                <button type="reset" id="btnReset" class="btn btn-outline-secondary">Reset</button>
                             </div>
 
                         </form>
@@ -327,7 +341,7 @@
 
                     submitHandler: function(form) {
                         let submitBtn = $(".btn-submit");
-                        submitBtn.prop("disabled", true).text("Submitting...");
+                        submitBtn.prop("disabled", true).text('Submitting ..');
 
                         $.ajax({
                             url: $(form).attr("action"),
@@ -337,22 +351,30 @@
                                 "X-CSRF-TOKEN": "{{ csrf_token() }}"
                             },
                             success: function(response) {
-                                submitBtn.prop("disabled", false).text("Submit");
-                                $(".form-container").prepend(`<div class="alert alert-success mt-3">Form submitted successfully!</div>`);
-                                form.reset();
+                                if(response.success){
+                                    Swal.fire({
+                                        // title: "The Internet?",
+                                        text: response.msg,
+                                        icon: "success"
+                                    }).then((result) => {
+                                        window.location.href = '/dashboard';
+                                    });
+                                }else{
+                                    Swal.fire({
+                                        // title: "The Internet?",
+                                        text: response.msg,
+                                        icon: "error"
+                                    });
+                                    form.reset();
+                                }
                             },
                             error: function() {
                                 submitBtn.prop("disabled", false).text("Submit");
-                                $(".form-container").prepend(`<div class="alert alert-danger mt-3">Something went wrong! Please try again.</div>`);
+                            },
+                            complete: function(){
+                                submitBtn.prop("disabled", false).text("Submit");
                             }
                         });
-
-                        // For demo we'll show a success toast and reset
-                        const data = $(form).serializeArray().reduce((acc, cur) => (acc[cur
-                            .name] = cur.value, acc), {});
-                        alert('Form validated successfully!\n\n' + JSON.stringify(data, null,
-                            2));
-                        // form.submit(); // or do AJAX
                     }
                 });
 

@@ -77,9 +77,9 @@
 <body>
 @include('admin.partials.navbar')
 @include('admin.partials.sidebar')
-
-@yield('content')
-
+<div id="content" class="content full">
+    @yield('content')
+</div>
 @yield('script')
 
 <script>

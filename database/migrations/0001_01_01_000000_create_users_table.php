@@ -19,7 +19,9 @@ return new class extends Migration
             $table->string('height')->nullable();
             $table->string('weight')->nullable();
             $table->string('email')->unique();
-            $table->string('role')->default('user');
+            $table->enum('role',['user','admin'])->default('user');
+            $table->string('phone')->nullable();
+            $table->enum('subscription',['yoga','diet','combo'])->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

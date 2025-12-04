@@ -1,7 +1,7 @@
 {{-- NAVBAR --}}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
     <div class="container">
-        <a class="navbar-brand fw-bold" href="{{ route('welcome') }}">Wellness</a>
+        <a class="navbar-brand fw-bold" href="{{ route('welcome') }}">{{ config('app.name', 'Laravel') }}</a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
@@ -33,10 +33,13 @@
                     <li class="nav-item dropdown ms-3">
                         <a class="nav-link dropdown-toggle fw-bold" href="#" id="userDropdown" role="button"
                             data-bs-toggle="dropdown">
-                            {{ Auth::user()->name }}
+                            {{ Auth::user()->full_name }}
                         </a>
 
                         <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <a class="dropdown-item" href="{{ route('admin.dashboard') }}">Dashboard</a>
+                            </li>
                             <li>
                                 <a class="dropdown-item" href="#"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

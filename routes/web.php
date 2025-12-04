@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DietController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -15,8 +18,14 @@ Route::post('/yoga-lead', [UserController::class, 'yogaLead'])->name('yoga.lead'
 Route::get('/diet', [UserController::class, 'getDiet'])->name('form.diet');
 Route::post('/diet-lead', [UserController::class, 'dietLead'])->name('diet.lead');
 
-Route::get('/dashboard', function () {
-    return view('admin.dashboard');
+Route::name('admin.')->middleware('auth')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/users', [AdminUserController::class, 'index'])->name('users.index');
+    Route::get('/users/{uuid}', [AdminUserController::class, 'userProfile'])->name('users.profile');
+
+    Route::get('/diet/create/{uuid}', [DietController::class, 'create'])->name('diet.create');
+    Route::post('/diet/store', [DietController::class, 'store'])->name('diet.store');
+
 });
 
 
@@ -28,7 +37,7 @@ Route::middleware('auth')->group(function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
 Route::get('/sample1',function(){

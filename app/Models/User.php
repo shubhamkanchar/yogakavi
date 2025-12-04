@@ -56,13 +56,17 @@ class User extends Authenticatable
         return $this->role === 'user';
     }
 
-    public function dietLeads() 
+    public function dietLead() 
     {
         return $this->hasOne(DietLead::class);
     }
     
-    public function yogaLeads() 
+    public function yogaLead() 
     {
         return $this->hasOne(YogaLead::class);
+    }
+
+    public function getFullNameAttribute(){
+        return $this->first_name.' '.$this->last_name;
     }
 }
