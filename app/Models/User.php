@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -18,8 +19,16 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
+        'age',
+        'height',
+        'weight',
+        'phone',
+        'subscription',
+        'role',
         'email',
+        'uuid',
         'password',
     ];
 
@@ -43,6 +52,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'subscription' => 'array',
         ];
     }
 
@@ -67,6 +77,61 @@ class User extends Authenticatable
     }
 
     public function getFullNameAttribute(){
-        return $this->first_name.' '.$this->last_name;
+        return ucfirst($this->first_name). ' ' .ucfirst($this->last_name);
+    }
+
+    public function activeSubscription()
+    {
+        return $this->hasOne(Subscription::class)
+            ->where('status', 'active')
+            ->latestOfMany();
+    }
+
+    public function hasActivePlan($type)
+    {
+        $activePlans = $this->subscription ?? [];
+        
+        // Direct match
+        if (in_array($type, $activePlans)) {
+            return true;
+        }
+
+        // Inheritance logic (if asking for yoga, do we have combo?)
+        if (($type === 'yoga' || $type === 'diet') && in_array('combo', $activePlans)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function hasFilledForm($type)
+    {
+        if ($type === 'yoga') {
+            return $this->yogaLead()->exists();
+        } elseif ($type === 'diet') {
+            return $this->dietLead()->exists();
+        } elseif ($type === 'combo') {
+            return $this->yogaLead()->exists() || $this->dietLead()->exists(); 
+        } elseif ($type === 'personal') {
+            // Assuming personal users might fill yoga/diet forms or a generic one?
+            // For now, return true or check existing forms if they apply.
+            // Let's assume personal training requires Yoga form as base.
+            return $this->yogaLead()->exists();
+        }
+        return false;
+    }
+
+    public function subscriptions()
+    {
+        return $this->hasMany(Subscription::class);
+    }
+
+    protected static function booted()
+    {
+        static::creating(function ($model) {
+            if (empty($model->uuid)) {
+                $model->uuid = (string) Str::uuid();
+            }
+        });
     }
 }

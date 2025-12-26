@@ -13,20 +13,21 @@
                                 <div class="mb-3 col-md-6">
                                     <label for="firstName" class="form-label">First Name <span
                                             class="text-danger">*</span></label>
-                                    <input type="text" id="firstName" name="first_name" class="form-control" required>
+                                    <input type="text" id="firstName" name="first_name" class="form-control" value="{{ old('first_name', $user->first_name ?? '') }}" required>
                                 </div>
                                 <div class="mb-3 col-md-6">
                                     <label for="LastName" class="form-label">Last Name <span
                                             class="text-danger">*</span></label>
-                                    <input type="text" id="LastName" name="last_name" class="form-control" required>
+                                    <input type="text" id="LastName" name="last_name" class="form-control" value="{{ old('last_name', $user->last_name ?? '') }}" required>
                                 </div>
                             </div>
 
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
-                                <input type="email" id="email" name="email" class="form-control" required>
+                                <input type="email" id="email" name="email" class="form-control" value="{{ old('email', $user->email ?? '') }}" required readonly>
                             </div>
 
+                            @guest
                             <div class="row">
                                 <div class="mb-3 col-md-6">
                                     <label for="password" class="col-form-label">{{ __('Password') }}</label>
@@ -37,6 +38,7 @@
                                     <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                                 </div>
                             </div>
+                            @endguest
 
                             <div class="row gx-3">
                                 <!-- Weight -->
@@ -44,7 +46,7 @@
                                     <label for="weight" class="form-label">Weight (kg) <span
                                             class="text-danger">*</span></label>
                                     <input id="weight" name="weight" type="number" min="1" step="0.1"
-                                        class="form-control" placeholder="e.g. 70">
+                                        class="form-control" value="{{ old('weight', $user->weight ?? '') }}" placeholder="e.g. 70">
                                 </div>
 
                                 <!-- Height -->
@@ -52,20 +54,20 @@
                                     <label for="height" class="form-label">Height (cm) <span
                                             class="text-danger">*</span></label>
                                     <input id="height" name="height" type="number" min="1" class="form-control"
-                                        placeholder="e.g. 170">
+                                        value="{{ old('height', $user->height ?? '') }}" placeholder="e.g. 170">
                                 </div>
 
                                 <!-- Age -->
                                 <div class="col-md-4 mb-3">
                                     <label for="age" class="form-label">Age <span class="text-danger">*</span></label>
                                     <input id="age" name="age" type="number" min="1" class="form-control"
-                                        placeholder="e.g. 30">
+                                        value="{{ old('age', $user->age ?? '') }}" placeholder="e.g. 30">
                                 </div>
                             </div>
 
                             <div class="mb-3">
                                 <label for="phone" class="form-label">Phone (optional)</label>
-                                <input id="phone" name="phone" type="tel" class="form-control"
+                                <input id="phone" name="phone" type="tel" class="form-control" value="{{ old('phone', $user->phone ?? '') }}"
                                     placeholder="10-digit phone number">
                             </div>
 

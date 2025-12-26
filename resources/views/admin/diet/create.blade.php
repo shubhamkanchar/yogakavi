@@ -3,15 +3,18 @@
 @section('content')
     <div class="container-fluid py-4">
         <div class="row">
-            <div class="col-md-12">
-                <a href="{{ route('admin.users.index') }}" class="btn btn-dark">Back</a>
+            <div class="col-md-4">
+                <h2 class="mb-4 fw-bold">Create Day-Wise Diet Plan</h2>
+            </div>
+            <div class="col-md-8 text-md-end">
+                <a href="{{ route('admin.users.index') }}" class="btn btn-outline-dark"><i class="bi bi-arrow-left"></i> Back</a>
+                <button type="button" id="addDay" class="btn btn-primary ms-2">+ Add Day</button>
+                <button type="button" id="autoFill" class="btn btn-warning ms-2">Auto-Fill 10 Days</button>
+                <button type="button" class="btn btn-success ms-2" id="saveDiet">Save Diet Plan</button>
             </div>
         </div>
     </div>
-    <div class="container-fluid py-4">
-
-        <h2 class="mb-4 fw-bold">Create Day-Wise Diet Plan</h2>
-
+    <div class="container-fluid">
         @if (session('success'))
             <div class="alert alert-success fw-bold">{{ session('success') }}</div>
         @endif
@@ -21,24 +24,16 @@
 
             <input type="hidden" name="uuid" value="{{request()->uuid}}">
             <!-- Buttons -->
-            <div class="mb-3">
-                <button type="button" id="addDay" class="btn btn-primary">+ Add Day</button>
-                <button type="button" id="autoFill" class="btn btn-warning ms-2">✨ Auto-Fill 15 Days</button>
-                <button type="submit" class="btn btn-success ms-2">Save Diet Plan</button>
-            </div>
+            
 
             <div id="daysContainer"></div>
 
             {{-- Hidden template outside the container (cloned when needed) --}}
             <div id="dayTemplate" class="day-box border rounded p-3 mb-4 shadow-sm d-none">
-                <div class="d-flex justify-content-between align-items-center">
-                    <h5 class="fw-bold">Day <span class="day-label">1</span></h5>
-                    <button type="button" class="btn btn-danger btn-sm remove-day d-none">Remove</button>
-                </div>
-
-                <div class="row mt-3 gx-3 gy-2">
-
-                    <!-- Weekday selector -->
+                <div class="row d-flex justify-content-between align-items-center">
+                    <div class="col-md-1">
+                        <h5 class="fw-bold">Day <span class="day-label">1</span></h5>
+                    </div>
                     <div class="col-md-3">
                         <label class="form-label">Weekday</label>
                         <select class="form-select weekday-select" data-name="days[0][weekday]">
@@ -51,9 +46,14 @@
                             <option>Saturday</option>
                         </select>
                     </div>
+                    <div class="col-md-8 text-md-end">
+                        <button type="button" class="btn btn-danger btn-sm remove-day d-none">Remove</button>
+                    </div>
+                </div>
 
+                <div class="row mt-3 gx-3 gy-2">
                     <!-- Breakfast -->
-                    <div class="col-md-5">
+                    <div class="meal-div col-md-4">
                         <label class="form-label">Breakfast</label>
                         <select class="form-select meal-select" data-name="days[0][breakfast]">
                             <option value="">Select Item</option>
@@ -73,7 +73,7 @@
                     </div>
 
                     <!-- Lunch -->
-                    <div class="col-md-5">
+                    <div class="meal-div col-md-4">
                         <label class="form-label">Lunch</label>
                         <select class="form-select meal-select" data-name="days[0][lunch]">
                             <option value="">Select Item</option>
@@ -92,7 +92,7 @@
                     </div>
 
                     <!-- Snacks -->
-                    <div class="col-md-5">
+                    <div class="meal-div col-md-4">
                         <label class="form-label">Snacks</label>
                         <select class="form-select meal-select" data-name="days[0][snacks]">
                             <option value="">Select Item</option>
@@ -111,7 +111,7 @@
                     </div>
 
                     <!-- Dinner -->
-                    <div class="col-md-5">
+                    <div class="meal-div col-md-4">
                         <label class="form-label">Dinner</label>
                         <select class="form-select meal-select" data-name="days[0][dinner]">
                             <option value="">Select Item</option>
@@ -174,7 +174,7 @@
                 // meal input (custom text) - set name but hide initially
                 $el.find('.meal-input').each(function(i) {
                     // find corresponding select's name to mirror
-                    const select = $(this).closest('.col-md-5').find('.meal-select');
+                    const select = $(this).closest('.meal-div').find('.meal-select');
                     const name = select.data('name').replace('0', index); // e.g. days[index][breakfast]
                     // note: we won't set name initially (unless user picks __new)
                     $(this).removeAttr('name');
@@ -214,7 +214,7 @@
 
             // handle meal-select change to show input for new item
             $(document).on('change', '.meal-select', function() {
-                const $col = $(this).closest('.col-md-5');
+                const $col = $(this).closest('.meal-div');
                 const $input = $col.find('.meal-input');
                 const selected = $(this).val();
 
@@ -236,7 +236,7 @@
             // Auto-fill 15 days (keeps weekdays cycling)
             $("#autoFill").on('click', function() {
                 $("#daysContainer").empty();
-                for (let i = 0; i < 15; i++) {
+                for (let i = 0; i < 10; i++) {
                     const weekdayName = weekdays[i % 7];
                     const $new = newDayElement(i, weekdayName, true);
                     $("#daysContainer").append($new);
@@ -288,6 +288,9 @@
                 });
             }
 
+            $(document).on('click','#saveDiet',function(){
+                $('#dietForm').submit();
+            })
         });
     </script>
 @endsection

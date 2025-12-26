@@ -61,7 +61,7 @@
 
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li>
-                                <a class="dropdown-item" href="{{ route('admin.dashboard') }}">Dashboard</a>
+                                <a class="dropdown-item" href="{{ route('dashboard') }}">Dashboard</a>
                             </li>
                             <li>
                                 <a class="dropdown-item" href="#"

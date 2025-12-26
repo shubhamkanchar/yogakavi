@@ -6,13 +6,17 @@
     <title>Admin Dashboard – Navbar + Collapsible Sidebar</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         body {
             background: #f4f6f9;
             overflow-x: hidden;
         }
-
+        body,h3,h4,h2,h5,p,a,button,div,span,input,td,th,tr,select,option {
+            font-family: 'Inter', sans-serif;
+        }
+        
         /* Sidebar */
         .sidebar {
             width: 260px;
@@ -20,7 +24,7 @@
             background: #343a40;
             transition: all 0.3s ease;
             position: fixed;
-            top: 56px; /* height of navbar */
+            top: 44px; /* height of navbar */
             left: 0;
             padding-top: 20px;
             z-index: 10;

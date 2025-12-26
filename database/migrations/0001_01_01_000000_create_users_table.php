@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique();
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
             $table->integer('age')->nullable();
@@ -21,7 +22,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->enum('role',['user','admin'])->default('user');
             $table->string('phone')->nullable();
-            $table->enum('subscription',['yoga','diet','combo'])->nullable();
+            $table->json('subscription')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

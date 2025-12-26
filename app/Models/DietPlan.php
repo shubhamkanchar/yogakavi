@@ -3,10 +3,20 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class DietPlan extends Model
 {
     protected $fillable = [
-        'user_id', 'day_number', 'breakfast', 'lunch', 'snacks', 'dinner'
+        'user_id', 'uuid'
     ];
+
+    protected static function booted()
+    {
+        static::creating(function ($model) {
+            if (empty($model->uuid)) {
+                $model->uuid = (string) Str::uuid();
+            }
+        });
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\DataTables\DietPlanDataTable;
 use App\DataTables\UsersDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -14,8 +15,9 @@ class UserController extends Controller
         return $dataTable->render('admin.users.index');
     }
 
-    public function userProfile(Request $request){
+    public function userProfile(DietPlanDataTable $dataTable,Request $request){
         $user = User::where('uuid',$request->uuid)->first();
-        return view('admin.users.profile',compact('user'));
+        return $dataTable->render('admin.users.profile',compact('user'));
+        // return view('admin.users.profile',compact('user'));
     }
 }

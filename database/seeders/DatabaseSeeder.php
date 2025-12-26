@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
-    use WithoutModelEvents;
+    // use WithoutModelEvents; // Commented out to allow Model Events (UUID generation)
 
     /**
      * Seed the application's database.
@@ -28,5 +28,9 @@ class DatabaseSeeder extends Seeder
             $user->password = Hash::make('123456');
             $user->save();
         }
+
+        $this->call([
+            PlanSeeder::class,
+        ]);
     }
 }

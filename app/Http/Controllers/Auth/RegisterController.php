@@ -28,7 +28,18 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    /**
+     * Where to redirect users after registration.
+     *
+     * @var string
+     */
+    protected function redirectTo()
+    {
+        if (session()->has('url.intended')) {
+            return session('url.intended');
+        }
+        return '/dashboard'; // Default
+    }
 
     /**
      * Create a new controller instance.
@@ -64,7 +75,7 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
+            'first_name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);

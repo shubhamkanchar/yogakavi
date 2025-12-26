@@ -14,58 +14,62 @@ class UserController extends Controller
 {
     public function getDiet()
     {
-        return view('form.diet');
+        if (!Auth::user()->hasActivePlan('diet')) {
+            return redirect()->route('dashboard')->with('error', 'You need an active Diet Plan to access this form.');
+        }
+        return view('form.diet', ['user' => Auth::user()]);
     }
 
     public function dietLead(Request $request)
     {
         try {
+            $user = Auth::user();
+            if (!$user) {
+                return response()->json(['success' => false, 'msg' => 'Unauthorized']);
+            }
+
             $request->validate([
                 'first_name' => 'required',
                 'last_name' => 'required',
-                'email' => 'required',
-                'password' => ['required', 'string', 'min:8', 'confirmed'],
+                'age' => 'required',
+                'height' => 'required',
+                'weight' => 'required',
+                // 'phone' => 'nullable', // Phone is optional in form
             ]);
 
-            $user = User::whereEmail($request->email)->first();
-            if ($user) {
-                return response()->json([
-                    'success' => true,
-                    'msg' => 'User diet form already submitted'
-                ]);
-            } else {
-                $user = new User();
-                $user->email = $request->email;
-                $user->first_name = $request->first_name;
-                $user->last_name = $request->last_name;
-                $user->age = $request->age;
-                $user->height = $request->height;
-                $user->weight = $request->weight;
-                $user->subscription = 'diet';
-                $user->phone = $request->phone;
-                $user->password = Hash::make($request->password);
-                $user->save();
+            // Update User Profile
+            $user->update([
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'age' => $request->age,
+                'height' => $request->height,
+                'weight' => $request->weight,
+                'phone' => $request->phone,
+            ]);
 
-                $diet = new DietLead();
-                $diet->user_id = $user->id;
-                $diet->past_surgery = $request->past_surgery;
-                $diet->surgery_details = $request->surgery_details;
-                $diet->thyroid = $request->thyroid;
-                $diet->diet_pref = $request->diet_pref;
-                $diet->routine = $request->routine;
-                $diet->allergy = $request->allergy;
-                $diet->allergy_details = $request->allergy_details;
-                $diet->occupation = $request->occupation;
-                $diet->phone = $request->phone;
-                $diet->notes = $request->notes;
-                $diet->save();
+            // Create or Update Diet Lead
+            // Using updateOrCreate to prevent duplicates if they resubmit
+            DietLead::updateOrCreate(
+                ['user_id' => $user->id],
+                [
+                    'past_surgery' => $request->past_surgery,
+                    'surgery_details' => $request->surgery_details,
+                    'thyroid' => $request->thyroid,
+                    'diet_pref' => $request->diet_pref,
+                    'routine' => $request->routine,
+                    'allergy' => $request->allergy,
+                    'allergy_details' => $request->allergy_details,
+                    'occupation' => $request->occupation,
+                    'phone' => $request->phone,
+                    'notes' => $request->notes,
+                ]
+            );
 
-                Auth::login($user);
-                return response()->json([
-                    'success' => true,
-                    'msg' => 'User diet form submitted successfully'
-                ]);
-            }
+            return response()->json([
+                'success' => true,
+                'msg' => 'Diet details updated successfully!'
+            ]);
+
         } catch (Exception $e) {
             return response()->json([
                 'success' => false,
@@ -77,52 +81,54 @@ class UserController extends Controller
 
     public function getYoga()
     {
-        return view('form.yoga');
+        if (!Auth::user()->hasActivePlan('yoga')) {
+            return redirect()->route('dashboard')->with('error', 'You need an active Yoga Plan to access this form.');
+        }
+        return view('form.yoga', ['user' => Auth::user()]);
     }
 
     public function yogaLead(Request $request)
     {
         try {
+            $user = Auth::user();
+            if (!$user) {
+                return response()->json(['success' => false, 'msg' => 'Unauthorized']);
+            }
+
             $request->validate([
                 'first_name' => 'required',
                 'last_name' => 'required',
-                'email' => 'required',
-                'password' => ['required', 'string', 'min:8', 'confirmed'],
+                'age' => 'required',
+                'height' => 'required',
+                'weight' => 'required',
             ]);
 
-            $user = User::whereEmail($request->email)->first();
-            if ($user) {
-                return response()->json([
-                    'success' => true,
-                    'msg' => 'User yoga form already submitted'
-                ]);
-            } else {
-                $user = new User();
-                $user->email = $request->email;
-                $user->first_name = $request->first_name;
-                $user->last_name = $request->last_name;
-                $user->age = $request->age;
-                $user->height = $request->height;
-                $user->weight = $request->weight;
-                $user->subscription = 'yoga';
-                $user->phone = $request->phone;
-                $user->password = Hash::make($request->password);
-                $user->save();
+            // Update User Profile
+            $user->update([
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'age' => $request->age,
+                'height' => $request->height,
+                'weight' => $request->weight,
+                'phone' => $request->phone,
+            ]);
 
-                $yoga = new YogaLead();
-                $yoga->user_id = $user->id;
-                $yoga->disease = $request->disease;
-                $yoga->surgery = $request->surgery;
-                $yoga->workout_type = $request->workout_type;
-                $yoga->reason = $request->reason;
-                $yoga->save();
+            // Create or Update Yoga Lead
+            YogaLead::updateOrCreate(
+                ['user_id' => $user->id],
+                [
+                    'disease' => $request->disease,
+                    'surgery' => $request->surgery,
+                    'workout_type' => $request->workout_type,
+                    'reason' => $request->reason,
+                ]
+            );
 
-                Auth::login($user);
-                return response()->json([
-                    'success' => true,
-                    'msg' => 'User diet form created successfully'
-                ]);
-            }
+            return response()->json([
+                'success' => true,
+                'msg' => 'Yoga details updated successfully!'
+            ]);
+
         } catch (Exception $e) {
             return response()->json([
                 'success' => false,

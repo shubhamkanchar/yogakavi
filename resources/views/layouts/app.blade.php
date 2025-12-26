@@ -9,10 +9,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     @yield('style')
+
     <style>
         .error{
             color: red;
+        }
+        body,h3,h4,h2,h5,p,a,button,div,span,input,td,th,tr,select,option {
+            font-family: 'Inter', sans-serif !important;
         }
     </style>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
