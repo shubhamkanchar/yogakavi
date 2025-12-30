@@ -110,9 +110,15 @@ class SubscriptionController extends Controller
     {
         $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
 
+        if($plan->discount_type && $plan->discount_value > 0) {
+            $amount = $plan->discounted_price * 100;
+        } else {
+            $amount = $plan->price * 100;
+        }
+
         $order = $api->order->create([
             'receipt' => (string) Str::uuid(),
-            'amount' => $plan->price * 100, // paise
+            'amount' => $amount, // paise
             'currency' => 'INR',
         ]);
 

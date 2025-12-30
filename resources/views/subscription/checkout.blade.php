@@ -17,7 +17,14 @@
                             <span class="badge bg-primary rounded-pill">{{ $plan->interval_days }} Days Access</span>
                         </div>
                         <div class="text-end">
-                            <h3 class="fw-bold text-primary mb-0">₹{{ number_format($plan->price, 0) }}</h3>
+                            @if($plan->discount_type && $plan->discount_value > 0)
+                                <div class="d-flex justify-content-center align-items-center gap-2">
+                                    <del class="text-muted h4 mb-0">₹{{ number_format($plan->price) }}</del>
+                                    <h2 class="display-5 fw-bold text-dark mb-0">₹{{ number_format($plan->discounted_price) }}</h2>
+                                </div>
+                            @else
+                                <h2 class="display-5 fw-bold text-dark mb-0">₹{{ number_format($plan->price) }}</h2>
+                            @endif
                         </div>
                     </div>
 
@@ -30,8 +37,12 @@
                     <button id="pay-btn" class="btn btn-dark w-100 py-3 rounded-pill fw-bold shadow-sm"
                         data-id="{{ $plan->uuid }}"
                         data-name="{{ $plan->name }}"
-                        data-price="{{ $plan->price }}">
-                        Pay ₹{{ number_format($plan->price, 0) }} Now
+                        >
+                        @if($plan->discount_type && $plan->discount_value > 0)
+                            Pay ₹{{ number_format($plan->discounted_price, 0) }} Now
+                        @else
+                            Pay ₹{{ number_format($plan->price, 0) }} Now
+                        @endif
                     </button>
                     
                     <div class="text-center mt-3">
