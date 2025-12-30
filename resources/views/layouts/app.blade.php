@@ -24,6 +24,7 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
     @include('layouts.partials.navbar')
+    @include('partials.alerts')
     {{-- <main class="py-4"> --}}
         @yield('content')
     {{-- </main> --}}

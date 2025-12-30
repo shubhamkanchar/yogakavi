@@ -28,36 +28,40 @@ class ExpireSubscriptions extends Command
     {
         $this->info('Checking for expired subscriptions...');
 
-        $expiredSubscriptions = Subscription::with(['user', 'plan'])
+        // 1. Handle Active Subscriptions that have expired
+        $expiredActive = Subscription::with(['user', 'plan'])
             ->where('status', 'active')
             ->where('expiry_date', '<', now())
             ->get();
 
-        if ($expiredSubscriptions->isEmpty()) {
-            $this->info('No expired subscriptions found.');
-            return;
-        }
-
-        foreach ($expiredSubscriptions as $subscription) {
-            // 1. Mark subscription as expired
-            $subscription->status = 'expired';
-            $subscription->save();
-
-            // 2. Remove plan type from user's subscription array
-            $user = $subscription->user;
-            if ($user && $subscription->plan) {
-                $type = $subscription->plan->type;
+        foreach ($expiredActive as $sub) {
+            $sub->update(['status' => 'expired']);
+            
+            $user = $sub->user;
+            if ($user && $sub->plan) {
+                $type = $sub->plan->type;
                 $currentSubs = $user->subscription ?? [];
-
-                // Remove the type
-                // Note: array_diff returns associative array, use array_values to reindex
                 $currentSubs = array_values(array_diff($currentSubs, [$type]));
-                
                 $user->subscription = $currentSubs;
                 $user->save();
                 
-                $this->info("Expired subscription {$subscription->id} for user {$user->id} (Plan: {$type})");
+                $this->info("Expired active subscription {$sub->id} for user {$user->id} (Plan: {$type})");
             }
+        }
+
+        // 2. Handle Trial Subscriptions that have ended
+        $expiredTrials = Subscription::with(['user', 'plan'])
+            ->where('status', 'trial')
+            ->where('trial_ends_at', '<', now())
+            ->get();
+
+        foreach ($expiredTrials as $trial) {
+            $trial->update(['status' => 'pending_payment']);
+            $this->info("Trial ended for subscription {$trial->id} - moved to pending_payment.");
+            
+            // Note: We don't remove from user->subscription array here, 
+            // because they still "have" the plan, just need to pay for it.
+            // Middleware will block them.
         }
 
         $this->info('Expiration check complete.');

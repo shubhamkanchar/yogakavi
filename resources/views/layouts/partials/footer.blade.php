@@ -26,6 +26,7 @@
                     <li class="mb-2"><a href="{{ route('welcome') }}#why-us" class="text-reset text-decoration-none hover-text-white">About Us</a></li>
                     <li class="mb-2"><a href="{{ route('welcome') }}#plans" class="text-reset text-decoration-none hover-text-white">Pricing</a></li>
                     <li class="mb-2"><a href="{{ route('welcome') }}#testimonials" class="text-reset text-decoration-none hover-text-white">Success Stories</a></li>
+                    <li class="mb-2"><a href="{{ route('contact.index') }}" class="text-reset text-decoration-none hover-text-white">Contact Us</a></li>
                 </ul>
             </div>
 
@@ -67,8 +68,9 @@
                 <p class="mb-0 text-white-50 small">© {{ date('Y') }} {{ config('app.name', 'Yogakavi') }}. All Rights Reserved.</p>
             </div>
             <div class="col-md-6 text-center text-md-end mt-3 mt-md-0">
-                <a href="#" class="text-white-50 small text-decoration-none me-3 hover-text-white">Privacy Policy</a>
-                <a href="#" class="text-white-50 small text-decoration-none hover-text-white">Terms of Service</a>
+                <a href="{{ route('privacy-policy') }}" class="text-white-50 small text-decoration-none me-3 hover-text-white">Privacy Policy</a>
+                <a href="{{ route('terms-and-conditions') }}" class="text-white-50 small text-decoration-none me-3 hover-text-white">Terms of Service</a>
+                <a href="{{ route('refund-policy') }}" class="text-white-50 small text-decoration-none hover-text-white">Refund Policy</a>
             </div>
         </div>
     </div>

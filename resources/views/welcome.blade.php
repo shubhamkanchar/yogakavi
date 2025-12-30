@@ -494,37 +494,86 @@
                 <p class="text-muted mt-3">Invest in your health with our transparent pricing packages.</p>
             </div>
 
-            <div class="row g-4 justify-content-center">
-                @foreach ($plans as $plan)
-                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
-                    <div class="card pricing-card h-100 shadow-sm position-relative">
-                        @if(strtolower($plan->name) == 'combo plan' || $loop->last)
-                            <div class="popular-badge">BEST VALUE</div>
-                        @endif
-                        
-                        <div class="card-body p-4 p-lg-5 text-center d-flex flex-column">
-                            <h5 class="fw-bold text-uppercase text-muted mb-4">{{ $plan->name }}</h5>
-                            <h2 class="display-4 fw-bold text-dark mb-0">₹{{ $plan->price }}</h2>
-                            <!-- <p class="text-muted small mb-4">/ Month</p> -->
+            @php
+                $typeLabels = [
+                    'yoga' => ['title' => 'Yoga Plans', 'color' => 'primary', 'icon' => 'bi-person-walking'],
+                    'diet' => ['title' => 'Diet Plans', 'color' => 'success', 'icon' => 'bi-egg-fried'],
+                    'combo' => ['title' => 'Combo Plans', 'color' => 'warning', 'icon' => 'bi-stars'],
+                    'personal' => ['title' => 'Personal Training', 'color' => 'danger', 'icon' => 'bi-person-heart'],
+                ];
+            @endphp
 
-                            <ul class="list-unstyled text-start mb-5 mx-auto">
-                                <li class="mb-3"><i class="bi bi-check-circle-fill text-success me-2"></i> Personalized Approach</li>
-                                <li class="mb-3"><i class="bi bi-check-circle-fill text-success me-2"></i> Weekly Check-ins</li>
-                                <li class="mb-3"><i class="bi bi-check-circle-fill text-success me-2"></i> WhatsApp Support</li>
-                                <li class="mb-3"><i class="bi bi-check-circle-fill text-success me-2"></i> Progress Tracking</li>
-                            </ul>
-
-                            <div class="mt-auto">
-                                <a href="{{ route('subscription.checkout', $plan->uuid) }}" 
-                                   class="btn btn-primary w-100 py-3 rounded-pill fw-bold shadow-sm scale-hover">
-                                    Select Plan
-                                </a>
-                            </div>
+            @foreach ($plans as $type => $typePlans)
+                @php $label = $typeLabels[$type] ?? ['title' => ucfirst($type), 'color' => 'secondary', 'icon' => 'bi-patch-check']; @endphp
+                
+                <div class="mb-5" data-aos="fade-up">
+                    <div class="d-flex align-items-center mb-4 border-bottom pb-2">
+                        <div class="bg-{{ $label['color'] }} bg-opacity-10 p-2 rounded-circle me-3 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px;">
+                            <i class="bi {{ $label['icon'] }} text-{{ $label['color'] }} fs-4"></i>
                         </div>
+                        <h3 class="h4 mb-0 fw-bold">{{ $label['title'] }}</h3>
+                    </div>
+
+                    <div class="row g-4 justify-content-start">
+                        @foreach ($typePlans as $plan)
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card pricing-card h-100 shadow-sm position-relative border-0" style="border-top: 5px solid {{ $plan->color }} !important;">
+                                    @if($plan->discount_type && $plan->discount_value > 0)
+                                        <div class="position-absolute top-0 end-0 m-3">
+                                            <span class="badge bg-danger rounded-pill shadow-sm">
+                                                @if($plan->discount_type === 'percentage')
+                                                    {{ round($plan->discount_value) }}% OFF
+                                                @else
+                                                    ₹{{ round($plan->discount_value) }} OFF
+                                                @endif
+                                            </span>
+                                        </div>
+                                    @endif
+
+                                    @if(strtolower($type) == 'combo' || $loop->first && $type == 'yoga')
+                                        <div class="popular-badge">BEST VALUE</div>
+                                    @endif
+                                    
+                                    <div class="card-body p-4 text-center d-flex flex-column">
+                                        <h5 class="fw-bold text-uppercase text-muted small mb-3">{{ $plan->name }}</h5>
+                                        
+                                        <div class="mb-4">
+                                            @if($plan->discount_type && $plan->discount_value > 0)
+                                                <div class="d-flex justify-content-center align-items-center gap-2">
+                                                    <del class="text-muted h4 mb-0">₹{{ number_format($plan->price) }}</del>
+                                                    <h2 class="display-5 fw-bold text-dark mb-0">₹{{ number_format($plan->discounted_price) }}</h2>
+                                                </div>
+                                            @else
+                                                <h2 class="display-5 fw-bold text-dark mb-0">₹{{ number_format($plan->price) }}</h2>
+                                            @endif
+                                            <p class="text-muted small mb-0">{{ $plan->interval_days }} Days Validity</p>
+                                            @if($plan->trial_days > 0)
+                                                <p class="text-success small fw-bold mb-0">Incl. {{ $plan->trial_days }} Days Free Trial</p>
+                                            @endif
+                                        </div>
+
+                                        <ul class="list-unstyled text-start mb-4 mx-auto">
+                                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i> Personalized Approach</li>
+                                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i> Weekly Check-ins</li>
+                                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i> WhatsApp Support</li>
+                                            @if($plan->description)
+                                                <li class="mb-2"><i class="bi bi-info-circle-fill text-primary me-2"></i> <span class="small">{{ Str::limit($plan->description, 50) }}</span></li>
+                                            @endif
+                                        </ul>
+
+                                        <div class="mt-auto">
+                                            <a href="{{ route('subscription.checkout', $plan->uuid) }}" 
+                                               class="btn btn-outline-{{ $label['color'] }} w-100 py-2 rounded-pill fw-bold shadow-sm transition-all border-2">
+                                                Buy Now
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
-                @endforeach
-            </div>
+            @endforeach
         </div>
     </section>
 

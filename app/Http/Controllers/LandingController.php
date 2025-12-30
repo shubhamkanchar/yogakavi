@@ -9,8 +9,23 @@ class LandingController extends Controller
 {
     public function index()
     {
-        $plans = Plan::all();
-        return view('welcome',compact('plans'));
+        $plans = Plan::where('is_active', true)->get()->groupBy('type');
+        return view('welcome', compact('plans'));
+    }
+
+    public function privacyPolicy()
+    {
+        return view('pages.privacy-policy');
+    }
+
+    public function termsAndConditions()
+    {
+        return view('pages.terms-and-conditions');
+    }
+
+    public function refundPolicy()
+    {
+        return view('pages.refund-policy');
     }
 
     

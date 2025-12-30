@@ -24,7 +24,7 @@
 
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
-                                <input type="email" id="email" name="email" class="form-control" value="{{ old('email', $user->email ?? '') }}" required readonly>
+                                <input type="email" id="email" name="email" class="form-control" value="{{ old('email', $user->email ?? '') }}" required @if($user->email) readonly @endif>
                             </div>
 
                             @guest
@@ -75,10 +75,13 @@
                             <div class="mb-3">
                                 <label for="past_surgery" class="form-label">Any Past Surgery? <span
                                         class="text-danger">*</span></label>
+                                @php
+                                    $ps = old('past_surgery', $user->dietLead->past_surgery ?? (isset($user->yogaLead->surgery) ? strtolower($user->yogaLead->surgery) : ''));
+                                @endphp
                                 <select id="past_surgery" name="past_surgery" class="form-select">
                                     <option value="">Select</option>
-                                    <option value="no">No</option>
-                                    <option value="yes">Yes</option>
+                                    <option value="no" {{ $ps === 'no' ? 'selected' : '' }}>No</option>
+                                    <option value="yes" {{ $ps === 'yes' ? 'selected' : '' }}>Yes</option>
                                 </select>
                             </div>
 
@@ -87,7 +90,7 @@
                                 <label for="surgery_details" class="form-label">If yes, please list surgeries / details
                                     <span class="text-danger">*</span></label>
                                 <textarea id="surgery_details" name="surgery_details" class="form-control" rows="2"
-                                    placeholder="Surgery details..."></textarea>
+                                    placeholder="Surgery details...">{{ old('surgery_details', $user->dietLead->surgery_details ?? '') }}</textarea>
                             </div>
 
                             <!-- Thyroid -->
@@ -96,8 +99,8 @@
                                         class="text-danger">*</span></label>
                                 <select id="thyroid" name="thyroid" class="form-select">
                                     <option value="">Select</option>
-                                    <option value="no">No</option>
-                                    <option value="yes">Yes</option>
+                                    <option value="no" {{ old('thyroid', $user->dietLead->thyroid ?? '') === 'no' ? 'selected' : '' }}>No</option>
+                                    <option value="yes" {{ old('thyroid', $user->dietLead->thyroid ?? '') === 'yes' ? 'selected' : '' }}>Yes</option>
                                 </select>
                             </div>
 
@@ -107,10 +110,10 @@
                                         class="text-danger">*</span></label>
                                 <select id="diet_pref" name="diet_pref" class="form-select">
                                     <option value="">Select</option>
-                                    <option value="vegetarian">Vegetarian</option>
-                                    <option value="non-vegetarian">Non-vegetarian</option>
-                                    <option value="eggetarian">Eggetarian</option>
-                                    <option value="other">Other</option>
+                                    <option value="vegetarian" {{ old('diet_pref', $user->dietLead->diet_pref ?? '') === 'vegetarian' ? 'selected' : '' }}>Vegetarian</option>
+                                    <option value="non-vegetarian" {{ old('diet_pref', $user->dietLead->diet_pref ?? '') === 'non-vegetarian' ? 'selected' : '' }}>Non-vegetarian</option>
+                                    <option value="eggetarian" {{ old('diet_pref', $user->dietLead->diet_pref ?? '') === 'eggetarian' ? 'selected' : '' }}>Eggetarian</option>
+                                    <option value="other" {{ old('diet_pref', $user->dietLead->diet_pref ?? '') === 'other' ? 'selected' : '' }}>Other</option>
                                 </select>
                             </div>
 
@@ -119,6 +122,7 @@
                                 <label for="routine" class="form-label">Daily workout / walking routine <span
                                         class="text-danger">*</span></label>
                                 <input id="routine" name="routine" type="text" class="form-control"
+                                    value="{{ old('routine', $user->dietLead->routine ?? '') }}"
                                     placeholder="e.g. 30 mins walking / gym 3x week">
                             </div>
 
@@ -128,9 +132,9 @@
                                         class="text-danger">*</span></label>
                                 <select id="allergy" name="allergy" class="form-select">
                                     <option value="">Select</option>
-                                    <option value="no">No</option>
-                                    <option value="yes">Yes</option>
-                                    <option value="other">Other</option>
+                                    <option value="no" {{ old('allergy', $user->dietLead->allergy ?? '') === 'no' ? 'selected' : '' }}>No</option>
+                                    <option value="yes" {{ old('allergy', $user->dietLead->allergy ?? '') === 'yes' ? 'selected' : '' }}>Yes</option>
+                                    <option value="other" {{ old('allergy', $user->dietLead->allergy ?? '') === 'other' ? 'selected' : '' }}>Other</option>
                                 </select>
                             </div>
 
@@ -139,7 +143,7 @@
                                 <label for="allergy_details" class="form-label">If yes / other, please specify <span
                                         class="text-danger">*</span></label>
                                 <textarea id="allergy_details" name="allergy_details" class="form-control" rows="2"
-                                    placeholder="Allergy details..."></textarea>
+                                    placeholder="Allergy details...">{{ old('allergy_details', $user->dietLead->allergy_details ?? '') }}</textarea>
                             </div>
 
                             <!-- Occupation -->
@@ -148,12 +152,12 @@
                                         class="text-danger">*</span></label>
                                 <select id="occupation" name="occupation" class="form-select">
                                     <option value="">Select</option>
-                                    <option value="employee">Employee</option>
-                                    <option value="housewife">Housewife / Homemaker</option>
-                                    <option value="retired">Retired</option>
-                                    <option value="student">Student</option>
-                                    <option value="self-employed">Self-employed</option>
-                                    <option value="other">Other</option>
+                                    <option value="employee" {{ old('occupation', $user->dietLead->occupation ?? '') === 'employee' ? 'selected' : '' }}>Employee</option>
+                                    <option value="housewife" {{ old('occupation', $user->dietLead->occupation ?? '') === 'housewife' ? 'selected' : '' }}>Housewife / Homemaker</option>
+                                    <option value="retired" {{ old('occupation', $user->dietLead->occupation ?? '') === 'retired' ? 'selected' : '' }}>Retired</option>
+                                    <option value="student" {{ old('occupation', $user->dietLead->occupation ?? '') === 'student' ? 'selected' : '' }}>Student</option>
+                                    <option value="self-employed" {{ old('occupation', $user->dietLead->occupation ?? '') === 'self-employed' ? 'selected' : '' }}>Self-employed</option>
+                                    <option value="other" {{ old('occupation', $user->dietLead->occupation ?? '') === 'other' ? 'selected' : '' }}>Other</option>
                                 </select>
                             </div>
 
@@ -161,7 +165,7 @@
 
                             <div class="mb-4">
                                 <label for="notes" class="form-label">Any additional notes (optional)</label>
-                                <textarea id="notes" name="notes" class="form-control" rows="3" placeholder="Add anything else..."></textarea>
+                                <textarea id="notes" name="notes" class="form-control" rows="3" placeholder="Add anything else...">{{ old('notes', $user->dietLead->notes ?? '') }}</textarea>
                             </div>
 
                             <div class="d-flex gap-2">

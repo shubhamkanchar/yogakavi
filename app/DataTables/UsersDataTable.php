@@ -35,8 +35,17 @@ class UsersDataTable extends DataTable
                 return date('d/m/Y',strtotime($row->updated_at));
             })
             ->editColumn('subscription',function($row){
-                return  implode(',', $row->subscription);
+                $sub = $row->activeSubscription;
+                if (!$sub) return '<span class="text-muted">No Plan</span>';
+                
+                $statusBadge = '';
+                if ($sub->status === 'trial') $statusBadge = ' <span class="badge bg-info">Trial</span>';
+                elseif ($sub->status === 'pending_payment') $statusBadge = ' <span class="badge bg-warning">Trial Ended</span>';
+                elseif ($sub->status === 'active') $statusBadge = ' <span class="badge bg-success">Paid</span>';
+                
+                return ($sub->plan->name ?? 'Unknown Plan') . '<br>' . $statusBadge;
             })
+            ->rawColumns(['subscription', 'action'])
             ->setRowId('id');
     }
 

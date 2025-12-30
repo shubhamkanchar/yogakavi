@@ -29,10 +29,7 @@ class DashboardController extends Controller
                     return redirect()->route('form.diet')->with('warning', 'Please complete your Diet Profile as well.');
                  }
             }
-            // Non-admin users might not need to see the admin dashboard stats?
-            // Assuming this controller serves both or strict admin. Based on route 'admin.dashboard', it seems strictly admin but the checks suggest mixed usage.
-            // If it's the dashboard for everyone, we should separate.
-            // But for now, let's keep the logic.
+            return view('admin.dashboard.index');
         }
 
         // Statistics

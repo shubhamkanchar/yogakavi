@@ -45,12 +45,17 @@
                 <h2 class="mb-4 fw-bold">User Profile</h2>
             </div>
             <div class="col-md-6 text-md-end">
-                <a href="{{ route('admin.users.index') }}" class="btn btn-outline-dark">
-                    <i class="bi bi-arrow-left"></i> Back
-                </a>
-                @if(in_array('diet',$user->subscription) || in_array('combo',$user->subscription))
-                <a href="{{ route('admin.diet.create', ['uuid' => $user->uuid]) }}" class="btn btn-success ms-2">Generate
-                    Diet</a>
+                @if(Auth::user()->isAdmin())
+                    <a href="{{ route('admin.users.index') }}" class="btn btn-outline-dark">
+                        <i class="bi bi-arrow-left"></i> Back
+                    </a>
+                    @if(in_array('diet',$user->subscription) || in_array('combo',$user->subscription))
+                        <a href="{{ route('admin.diet.create', ['uuid' => $user->uuid]) }}" class="btn btn-success ms-2">Generate Diet</a>
+                    @endif
+                @else
+                    <a href="{{ route('dashboard') }}" class="btn btn-outline-dark">
+                        <i class="bi bi-arrow-left"></i> Back to Dashboard
+                    </a>
                 @endif
             </div>
         </div>
@@ -64,9 +69,22 @@
                         <p class="mb-1">{{ $user->email }}</p>
                     </div>
                     <div class="col-md-5">
-                        
-                        <span
-                            class="badge bg-warning text-dark px-3 py-2 fs-6">{{ implode(',', $user->subscription) }} Subscription</span>
+@if($user->activeSubscription)
+                            <div class="mt-2">
+                                <span class="badge bg-white text-dark px-3 py-2 fs-6 shadow-sm border mb-2">Plan: {{ $user->activeSubscription->plan->name }}</span>
+                                <br>
+                                @php $sub = $user->activeSubscription; @endphp
+                                @if($sub->status === 'trial')
+                                    <span class="badge bg-info text-dark px-3 py-2 fs-6 shadow-sm">Trial (Ends: {{ $sub->trial_ends_at->format('d M') }})</span>
+                                @elseif($sub->status === 'pending_payment')
+                                    <span class="badge bg-danger px-3 py-2 fs-6 shadow-sm">Trial Ended - Payment Pending</span>
+                                @elseif($sub->status === 'active')
+                                    <span class="badge bg-success px-3 py-2 fs-6 shadow-sm">Active (Expires: {{ $sub->expiry_date->format('d M') }})</span>
+                                @endif
+                            </div>
+                        @else
+                            <span class="badge bg-secondary px-3 py-2 fs-6 shadow-sm mt-2">No Active Subscription</span>
+                        @endif
                     </div>
                 </div>
             </div>

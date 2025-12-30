@@ -83,8 +83,40 @@ class User extends Authenticatable
     public function activeSubscription()
     {
         return $this->hasOne(Subscription::class)
-            ->where('status', 'active')
+            ->whereIn('status', ['active', 'trial', 'pending_payment'])
             ->latestOfMany();
+    }
+
+    public function activeSubscriptionDietPlan()
+    {
+        return $this->hasOne(Subscription::class)
+            ->whereIn('status', ['active', 'trial', 'pending_payment'])
+            ->where('plan_type', 'diet')
+            ->latest();
+    }
+
+    public function activeSubscriptionYogaPlan()
+    {
+        return $this->hasOne(Subscription::class)
+            ->whereIn('status', ['active', 'trial', 'pending_payment'])
+            ->where('plan_type', 'yoga')
+            ->latest();
+    }
+
+    public function activeSubscriptionComboPlan()
+    {
+        return $this->hasOne(Subscription::class)
+            ->whereIn('status', ['active', 'trial', 'pending_payment'])
+            ->where('plan_type', 'combo')
+            ->latest();
+    }
+
+    public function activeSubscriptionPersonalPlan()
+    {
+        return $this->hasOne(Subscription::class)
+            ->whereIn('status', ['active', 'trial', 'pending_payment'])
+            ->where('plan_type', 'personal')
+            ->latest();
     }
 
     public function hasActivePlan($type)

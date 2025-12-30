@@ -24,7 +24,7 @@
 
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
-                                <input type="email" id="email" name="email" class="form-control" value="{{ old('email', $user->email ?? '') }}" required readonly>
+                                <input type="email" id="email" name="email" class="form-control" value="{{ old('email', $user->email ?? '') }}" required @if($user) readonly @endif>
                             </div>
 
 
@@ -76,17 +76,20 @@
                                             class="text-danger">*</span></label>
                                     <select name="disease" class="form-select" required>
                                         <option value="">Select</option>
-                                        <option value="No">No</option>
-                                        <option value="Yes">Yes</option>
+                                        <option value="No" {{ old('disease', $user->yogaLead->disease ?? '') === 'No' ? 'selected' : '' }}>No</option>
+                                        <option value="Yes" {{ old('disease', $user->yogaLead->disease ?? '') === 'Yes' ? 'selected' : '' }}>Yes</option>
                                     </select>
                                 </div>
 
                                 <div class="mb-3 col-md-4">
                                     <label class="form-label">Past Surgery? <span class="text-danger">*</span></label>
+                                    @php
+                                        $s = old('surgery', $user->yogaLead->surgery ?? (isset($user->dietLead->past_surgery) ? ucfirst($user->dietLead->past_surgery) : ''));
+                                    @endphp
                                     <select name="surgery" class="form-select" required>
                                         <option value="">Select</option>
-                                        <option value="No">No</option>
-                                        <option value="Yes">Yes</option>
+                                        <option value="No" {{ $s === 'No' ? 'selected' : '' }}>No</option>
+                                        <option value="Yes" {{ $s === 'Yes' ? 'selected' : '' }}>Yes</option>
                                     </select>
                                 </div>
 
@@ -95,12 +98,12 @@
                                             class="text-danger">*</span></label>
                                     <select name="workout_type" class="form-select" required>
                                         <option value="">Select workout type</option>
-                                        <option value="Walk">Walk</option>
-                                        <option value="Gym">Gym</option>
-                                        <option value="Yoga">Yoga</option>
-                                        <option value="Aerobics">Aerobics</option>
-                                        <option value="None">None</option>
-                                        <option value="Other">Other</option>
+                                        <option value="Walk" {{ old('workout_type', $user->yogaLead->workout_type ?? '') === 'Walk' ? 'selected' : '' }}>Walk</option>
+                                        <option value="Gym" {{ old('workout_type', $user->yogaLead->workout_type ?? '') === 'Gym' ? 'selected' : '' }}>Gym</option>
+                                        <option value="Yoga" {{ old('workout_type', $user->yogaLead->workout_type ?? '') === 'Yoga' ? 'selected' : '' }}>Yoga</option>
+                                        <option value="Aerobics" {{ old('workout_type', $user->yogaLead->workout_type ?? '') === 'Aerobics' ? 'selected' : '' }}>Aerobics</option>
+                                        <option value="None" {{ old('workout_type', $user->yogaLead->workout_type ?? '') === 'None' ? 'selected' : '' }}>None</option>
+                                        <option value="Other" {{ old('workout_type', $user->yogaLead->workout_type ?? '') === 'Other' ? 'selected' : '' }}>Other</option>
                                     </select>
                                 </div>
                             </div>
@@ -108,7 +111,7 @@
                             <div class="mb-3">
                                 <label for="reason" class="form-label">Reason for joining (Yoga) <span
                                         class="text-danger">*</span></label>
-                                <textarea id="reason" name="reason" class="form-control" rows="3" required></textarea>
+                                <textarea id="reason" name="reason" class="form-control" rows="3" required>{{ old('reason', $user->yogaLead->reason ?? '') }}</textarea>
                             </div>
 
                             <button type="submit" class="btn btn-primary btn-submit py-2">Submit</button>
