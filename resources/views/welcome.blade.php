@@ -594,19 +594,19 @@
                                         <div class="bg-primary rounded-circle p-2 me-3 d-flex align-items-center justify-content-center" style="width:40px;height:40px;">
                                             <i class="bi bi-envelope-fill"></i>
                                         </div>
-                                        <span>contact@yogakavi.com</span>
+                                        <span>{{env('CON_EMAIL')}}</span>
                                     </div>
                                     <div class="d-flex align-items-center mb-3">
                                         <div class="bg-primary rounded-circle p-2 me-3 d-flex align-items-center justify-content-center" style="width:40px;height:40px;">
                                             <i class="bi bi-telephone-fill"></i>
                                         </div>
-                                        <span>+91 96969 69696</span>
+                                        <span>{{env('CON_PHONE')}}</span>
                                     </div>
                                     <div class="d-flex align-items-center">
                                         <div class="bg-primary rounded-circle p-2 me-3 d-flex align-items-center justify-content-center" style="width:40px;height:40px;">
                                             <i class="bi bi-geo-alt-fill"></i>
                                         </div>
-                                        <span>Kanpur, Uttar Pradesh</span>
+                                        <span>{{env('CON_ADD')}}</span>
                                     </div>
                                 </div>
                                 

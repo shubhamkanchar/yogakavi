@@ -47,15 +47,15 @@
                  <ul class="list-unstyled text-white-50 small">
                     <li class="mb-3 d-flex align-items-start">
                         <i class="bi bi-geo-alt-fill me-2 mt-1 text-primary"></i>
-                        <span>123 Wellness Street, Civil Lines, Kanpur, Uttar Pradesh, India</span>
+                        <span>{{env('CON_ADD')}}</span>
                     </li>
                     <li class="mb-3 d-flex align-items-center">
                         <i class="bi bi-envelope-fill me-2 text-primary"></i>
-                        <span>contact@yogakavi.com</span>
+                        <span>{{env('CON_EMAIL')}}</span>
                     </li>
                     <li class="mb-3 d-flex align-items-center">
                         <i class="bi bi-telephone-fill me-2 text-primary"></i>
-                        <span>+91 96969 69696</span>
+                        <span>{{env('CON_PHONE')}}</span>
                     </li>
                  </ul>
             </div>
