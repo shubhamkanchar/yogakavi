@@ -4,6 +4,7 @@
         body {
             background: #f2f6ff;
             font-family: 'Poppins', sans-serif;
+            word-wrap: break-word;
         }
 
         .profile-header {
@@ -49,7 +50,7 @@
                     <a href="{{ route('admin.users.index') }}" class="btn btn-outline-dark">
                         <i class="bi bi-arrow-left"></i> Back
                     </a>
-                    @if(in_array('diet',$user->subscription) || in_array('combo',$user->subscription))
+                    @if($user->hasActivePlan('diet') || $user->hasActivePlan('combo'))
                         <a href="{{ route('admin.diet.create', ['uuid' => $user->uuid]) }}" class="btn btn-success ms-2">Generate Diet</a>
                     @endif
                 @else
@@ -62,25 +63,27 @@
     </div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="profile-header mb-4  row">
-                    <div class="col-md-7">
+                    <div class="col-md-12">
                         <h2 class="fw-bold">{{ $user->first_name }} {{ $user->last_name }}</h2>
                         <p class="mb-1">{{ $user->email }}</p>
                     </div>
-                    <div class="col-md-5">
-@if($user->activeSubscription)
-                            <div class="mt-2">
-                                <span class="badge bg-white text-dark px-3 py-2 fs-6 shadow-sm border mb-2">Plan: {{ $user->activeSubscription->plan->name }}</span>
-                                <br>
-                                @php $sub = $user->activeSubscription; @endphp
-                                @if($sub->status === 'trial')
-                                    <span class="badge bg-info text-dark px-3 py-2 fs-6 shadow-sm">Trial (Ends: {{ $sub->trial_ends_at->format('d M') }})</span>
-                                @elseif($sub->status === 'pending_payment')
-                                    <span class="badge bg-danger px-3 py-2 fs-6 shadow-sm">Trial Ended - Payment Pending</span>
-                                @elseif($sub->status === 'active')
-                                    <span class="badge bg-success px-3 py-2 fs-6 shadow-sm">Active (Expires: {{ $sub->expiry_date->format('d M') }})</span>
-                                @endif
+                    <div class="col-md-12">
+                        @if($user->activeSubscriptions && $user->activeSubscriptions->isNotEmpty())
+                            <div class="mt-2 row">
+                                @foreach($user->activeSubscriptions as $sub)
+                                    <div class="border p-2 rounded bg-white shadow-sm col m-2 ">
+                                        <div class="fw-bold text-dark mb-1">Plan: {{ $sub->plan->name }}</div>
+                                        @if($sub->status === 'trial')
+                                            <span class="badge bg-info text-dark px-2 py-1">Trial (Ends: {{ $sub->trial_ends_at ? $sub->trial_ends_at->format('d M') : 'N/A' }})</span>
+                                        @elseif($sub->status === 'pending_payment')
+                                            <span class="badge bg-danger px-2 py-1">Trial Ended - Payment Pending</span>
+                                        @elseif($sub->status === 'active')
+                                            <span class="badge bg-success px-2 py-1">Active (Expires: {{ $sub->expiry_date ? $sub->expiry_date->format('d M, Y') : 'N/A' }})</span>
+                                        @endif
+                                    </div>
+                                @endforeach
                             </div>
                         @else
                             <span class="badge bg-secondary px-3 py-2 fs-6 shadow-sm mt-2">No Active Subscription</span>
@@ -88,7 +91,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="section-card">
                     <h4 class="section-title">Common Details</h4>
                     <div class="row g-3">

@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DietController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\PlanController;
+use App\Http\Controllers\Admin\SubscriptionController as AdminSubscriptionController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubscriptionController;
@@ -25,7 +26,7 @@ Route::get('/diet', [UserController::class, 'getDiet'])->name('form.diet');
 Route::post('/yoga-lead', [UserController::class, 'yogaLead'])->name('yoga.lead');
 Route::post('/diet-lead', [UserController::class, 'dietLead'])->name('diet.lead');
 Route::post('/razorpay/webhook', [WebhookController::class, 'handle']);
-
+Route::get('/secure-image/{filename}', [LandingController::class, 'show'])->name('secure-image');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/checkout/{plan:uuid}', [SubscriptionController::class, 'checkout'])->name('subscription.checkout');
@@ -50,6 +51,8 @@ Route::name('admin.')->middleware('auth')->group(function () {
     Route::get('/broadcast/create', [\App\Http\Controllers\Admin\BroadcastController::class, 'create'])->name('broadcast.create');
     Route::post('/broadcast/preview', [\App\Http\Controllers\Admin\BroadcastController::class, 'preview'])->name('broadcast.preview');
     Route::post('/broadcast/send-email', [\App\Http\Controllers\Admin\BroadcastController::class, 'sendEmails'])->name('broadcast.send_email');
+
+    Route::resource('subscriptions', AdminSubscriptionController::class);
 });
 
 Auth::routes();

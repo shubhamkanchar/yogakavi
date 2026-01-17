@@ -38,11 +38,11 @@ class DashboardController extends Controller
         $activeSubscriptions = \App\Models\Subscription::where('status', 'active')->count();
         
         // Plan Distribution
-        $planCounts = \App\Models\Subscription::where('status', 'active')
-            ->join('plans', 'subscriptions.plan_id', '=', 'plans.id')
-            ->selectRaw('plans.type, count(*) as count')
-            ->groupBy('plans.type')
-            ->pluck('count', 'type');
+        // $planCounts = \App\Models\Subscription::where('status', 'active')
+        //     ->join('plans', 'subscriptions.plan_id', '=', 'plans.id')
+        //     ->selectRaw('plans.type, count(*) as count')
+        //     ->groupBy('plans.type')
+        //     ->pluck('count', 'type');
 
         // Top 5 Users by Purchase Value
         $topSpenders = \App\Models\Subscription::selectRaw('user_id, sum(amount) as total_spent')
@@ -63,8 +63,7 @@ class DashboardController extends Controller
         return view('admin.dashboard.index', compact(
             'totalUsers', 
             'totalRevenue', 
-            'activeSubscriptions', 
-            'planCounts', 
+            'activeSubscriptions',
             'topSpenders', 
             'frequentBuyers'
         ));

@@ -30,7 +30,7 @@ class SubscriptionController extends Controller
             if ($user->hasActivePlan('yoga')) {
                 $activeSubscription = $user->activeSubscriptionYogaPlan;
                 // If it's a trial that ended, they ARE allowed here to pay.
-                if ($activeSubscription && $activeSubscription->plan_id == $plan->id && $activeSubscription->status === 'pending_payment') {
+                if ($activeSubscription && $activeSubscription->plan_id == $plan->id && in_array($activeSubscription->status, ['trial', 'pending_payment'])) {
                     // Allow payment
                 } else {
                     $msg = $user->hasActivePlan('combo') ? 'You have a Combo plan which already includes Yoga.' : 'You already have an active Yoga plan.';
@@ -40,7 +40,7 @@ class SubscriptionController extends Controller
         } elseif ($plan->type === 'diet') {
             if ($user->hasActivePlan('diet')) {
                 $activeSubscription = $user->activeSubscriptionDietPlan;
-                if ($activeSubscription && $activeSubscription->plan_id == $plan->id && $activeSubscription->status === 'pending_payment') {
+                if ($activeSubscription && $activeSubscription->plan_id == $plan->id && in_array($activeSubscription->status, ['trial', 'pending_payment'])) {
                     // Allow payment
                 } else {
                     $msg = $user->hasActivePlan('combo') ? 'You have a Combo plan which already includes Diet.' : 'You already have an active Diet plan.';
@@ -50,7 +50,7 @@ class SubscriptionController extends Controller
         } elseif ($plan->type === 'combo') {
             if ($user->hasActivePlan('combo')) {
                 $activeSubscription = $user->activeSubscriptionComboPlan;
-                if ($activeSubscription && $activeSubscription->plan_id == $plan->id && $activeSubscription->status === 'pending_payment') {
+                if ($activeSubscription && $activeSubscription->plan_id == $plan->id && in_array($activeSubscription->status, ['trial', 'pending_payment'])) {
                     // Allow payment
                 } else {
                     return redirect()->route('dashboard')->with('error', 'You already have an active Combo plan.');
@@ -62,7 +62,7 @@ class SubscriptionController extends Controller
         } elseif ($plan->type === 'personal') {
             if ($user->hasActivePlan('personal')) {
                 $activeSubscription = $user->activeSubscriptionPersonalPlan;
-                if ($activeSubscription && $activeSubscription->plan_id == $plan->id && $activeSubscription->status === 'pending_payment') {
+                if ($activeSubscription && $activeSubscription->plan_id == $plan->id && in_array($activeSubscription->status, ['trial', 'pending_payment'])) {
                     // Allow payment
                 } else {
                     return redirect()->route('dashboard')->with('error', 'You already have an active Personal Training plan.');

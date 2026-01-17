@@ -22,30 +22,30 @@ class UsersDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', function($row){
+            ->addColumn('action', function($user){
                 $action = '';
 
-                $action .='<a href="'.route('admin.users.profile',['uuid'=>$row->uuid]).'" class="btn btn-primary btn-sm">View</a>'; 
-                if( in_array('diet',$row->subscription) || in_array('combo',$row->subscription)){
-                    $action .= '<a href="'.route('admin.diet.create',['uuid'=>$row->uuid]).'" class="btn btn-success btn-sm ms-2">Generate Diet</a>';
+                $action .='<a href="'.route('admin.users.profile',['uuid'=>$user->uuid]).'" class="btn btn-primary btn-sm">View</a>'; 
+                if( $user->hasActivePlan('diet') || $user->hasActivePlan('combo')){
+                    $action .= '<a href="'.route('admin.diet.create',['uuid'=>$user->uuid]).'" class="btn btn-success btn-sm ms-2">Generate Diet</a>';
                 }
                 return $action; 
             })
             ->editColumn('updated_at',function($row){
                 return date('d/m/Y',strtotime($row->updated_at));
             })
-            ->editColumn('subscription',function($row){
-                $sub = $row->activeSubscription;
-                if (!$sub) return '<span class="text-muted">No Plan</span>';
+            // ->editColumn('subscription',function($row){
+            //     $sub = $row->activeSubscription;
+            //     if (!$sub) return '<span class="text-muted">No Plan</span>';
                 
-                $statusBadge = '';
-                if ($sub->status === 'trial') $statusBadge = ' <span class="badge bg-info">Trial</span>';
-                elseif ($sub->status === 'pending_payment') $statusBadge = ' <span class="badge bg-warning">Trial Ended</span>';
-                elseif ($sub->status === 'active') $statusBadge = ' <span class="badge bg-success">Paid</span>';
+            //     $statusBadge = '';
+            //     if ($sub->status === 'trial') $statusBadge = ' <span class="badge bg-info">Trial</span>';
+            //     elseif ($sub->status === 'pending_payment') $statusBadge = ' <span class="badge bg-warning">Trial Ended</span>';
+            //     elseif ($sub->status === 'active') $statusBadge = ' <span class="badge bg-success">Paid</span>';
                 
-                return ($sub->plan->name ?? 'Unknown Plan') . '<br>' . $statusBadge;
-            })
-            ->rawColumns(['subscription', 'action'])
+            //     return ($sub->plan->name ?? 'Unknown Plan') . '<br>' . $statusBadge;
+            // })
+            ->rawColumns([ 'action'])
             ->setRowId('id');
     }
 
@@ -91,7 +91,7 @@ class UsersDataTable extends DataTable
             Column::make('first_name'),
             Column::make('last_name'),
             Column::make('email'),
-            Column::make('subscription'),
+            // Column::make('subscription'),
             Column::make('height'),
             Column::make('weight'),
             Column::make('age'),

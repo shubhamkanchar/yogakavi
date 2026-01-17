@@ -25,7 +25,7 @@ class UserController extends Controller
         if (!$user) {
             abort(404);
         }
-        return $dataTable->render('admin.users.profile',compact('user'));
+        return $dataTable->with('user', $user)->render('admin.users.profile',compact('user'));
         // return view('admin.users.profile',compact('user'));
     }
 }

@@ -25,7 +25,7 @@ class User extends Authenticatable
         'height',
         'weight',
         'phone',
-        'subscription',
+        // 'subscription', // Removed
         'role',
         'email',
         'uuid',
@@ -52,7 +52,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'subscription' => 'array',
+            // 'subscription' => 'array', // Removed
         ];
     }
 
@@ -83,8 +83,15 @@ class User extends Authenticatable
     public function activeSubscription()
     {
         return $this->hasOne(Subscription::class)
-            ->whereIn('status', ['active', 'trial', 'pending_payment'])
+            ->whereIn('status', ['active', 'trial'])
             ->latestOfMany();
+    }
+
+    public function activeSubscriptions()
+    {
+        return $this->hasMany(Subscription::class)
+            ->whereIn('status', ['active', 'trial'])
+            ->orderBy('expiry_date', 'desc');
     }
 
     public function activeSubscriptionDietPlan()
@@ -121,7 +128,8 @@ class User extends Authenticatable
 
     public function hasActivePlan($type)
     {
-        $activePlans = $this->subscription ?? [];
+        // Use relationship instead of column
+        $activePlans = $this->activeSubscriptions->pluck('plan_type')->toArray() ?? [];
         
         // Direct match
         if (in_array($type, $activePlans)) {

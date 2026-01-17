@@ -12,11 +12,16 @@
         body {
             background: #f4f6f9;
             overflow-x: hidden;
+            text-wrap: auto !important;
+            word-wrap: break-word !important;
         }
         body,h3,h4,h2,h5,p,a,button,div,span,input,td,th,tr,select,option {
             font-family: 'Inter', sans-serif;
         }
-        
+        .badge{
+            text-wrap: auto !important;
+            word-wrap: break-word !important;
+        }
         /* Sidebar */
         .sidebar {
             width: 260px;
@@ -68,6 +73,7 @@
             margin-top: 60px;
             transition: margin-left 0.3s ease;
             padding: 25px;
+            word-wrap: break-word;
         }
 
         .content.full {

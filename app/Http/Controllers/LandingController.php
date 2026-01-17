@@ -28,5 +28,19 @@ class LandingController extends Controller
         return view('pages.refund-policy');
     }
 
-    
+    public function show($filename)
+    {
+        // Optional: Auth check
+        // if (!auth()->check()) {
+        //     abort(403);
+        // }
+
+        $path = storage_path('app/private_image/' . $filename);
+
+        if (!file_exists($path)) {
+            abort(404);
+        }
+
+        return response()->file($path);
+    }
 }

@@ -39,7 +39,7 @@ class DietPlanDataTable extends DataTable
      */
     public function query(DietPlan $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()->where('user_id', $this->user->id);
     }
 
     /**
