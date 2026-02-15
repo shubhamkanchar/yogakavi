@@ -29,7 +29,16 @@ class DashboardController extends Controller
                     return redirect()->route('form.diet')->with('warning', 'Please complete your Diet Profile as well.');
                  }
             }
-            return view('admin.dashboard.index');
+
+            // Fetch Live Class if user has yoga plan and filled form
+            $liveClass = null;
+            if (($user->hasActivePlan('yoga') || $user->hasActivePlan('combo') || $user->hasActivePlan('personal')) && $user->yogaLead) {
+                $liveClass = \App\Models\LiveClass::where('is_active', true)
+                    ->where('time_slot', $user->yogaLead->time_slot)
+                    ->first();
+            }
+
+            return view('admin.dashboard.index', compact('liveClass'));
         }
 
         // Statistics
@@ -60,12 +69,18 @@ class DashboardController extends Controller
             ->with('user')
             ->get();
 
+        // Diet Plans Expiring Soon (Ends in next 2 days)
+        $expiringDietPlans = \App\Models\DietPlan::whereBetween('end_date', [now()->toDateString(), now()->addDays(2)->toDateString()])
+            ->with('user')
+            ->get();
+
         return view('admin.dashboard.index', compact(
             'totalUsers', 
             'totalRevenue', 
             'activeSubscriptions',
             'topSpenders', 
-            'frequentBuyers'
+            'frequentBuyers',
+            'expiringDietPlans'
         ));
     }
 }

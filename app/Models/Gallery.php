@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class DietPlan extends Model
+class Gallery extends Model
 {
     protected $fillable = [
-        'user_id', 'uuid', 'end_date'
+        'uuid', 'image', 'title', 'description', 'is_active'
     ];
 
     protected static function booted()
@@ -20,8 +20,8 @@ class DietPlan extends Model
         });
     }
 
-    public function user()
+    public function getImageUrlAttribute()
     {
-        return $this->belongsTo(User::class);
+        return asset('storage/' . $this->image);
     }
 }

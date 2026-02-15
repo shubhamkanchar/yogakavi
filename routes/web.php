@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DietController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\PlanController;
+use App\Http\Controllers\Admin\LiveClassController;
 use App\Http\Controllers\Admin\SubscriptionController as AdminSubscriptionController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ProfileController;
@@ -28,7 +29,16 @@ Route::post('/diet-lead', [UserController::class, 'dietLead'])->name('diet.lead'
 Route::post('/razorpay/webhook', [WebhookController::class, 'handle']);
 Route::get('/secure-image/{filename}', [LandingController::class, 'show'])->name('secure-image');
 
+// Public Blog Routes
+Route::get('/blogs', [\App\Http\Controllers\BlogController::class, 'index'])->name('blogs.index');
+Route::get('/blogs/{slug}', [\App\Http\Controllers\BlogController::class, 'show'])->name('blogs.show');
+
 Route::middleware(['auth'])->group(function () {
+    // Blog Interactions
+    Route::post('/blogs/{blog}/comments', [\App\Http\Controllers\BlogController::class, 'storeComment'])->name('blogs.comments.store');
+    Route::post('/blogs/{blog}/like', [\App\Http\Controllers\BlogController::class, 'toggleLike'])->name('blogs.like');
+    Route::delete('/comments/{comment}', [\App\Http\Controllers\BlogController::class, 'destroyComment'])->name('comments.destroy');
+
     Route::get('/checkout/{plan:uuid}', [SubscriptionController::class, 'checkout'])->name('subscription.checkout');
     Route::middleware(['check.subscription'])->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -53,7 +63,16 @@ Route::name('admin.')->middleware('auth')->group(function () {
     Route::post('/broadcast/send-email', [\App\Http\Controllers\Admin\BroadcastController::class, 'sendEmails'])->name('broadcast.send_email');
 
     Route::resource('subscriptions', AdminSubscriptionController::class);
+    Route::resource('live_classes', LiveClassController::class);
+
+    Route::prefix('admin')->group(function () {
+        Route::resource('blogs', \App\Http\Controllers\Admin\BlogController::class);
+        Route::resource('gallery', \App\Http\Controllers\Admin\GalleryController::class);
+        Route::post('/gallery/{gallery}/toggle', [\App\Http\Controllers\Admin\GalleryController::class, 'toggleStatus'])->name('gallery.toggle');
+    });
 });
+
+Route::get('/gallery', [\App\Http\Controllers\GalleryController::class, 'index'])->name('gallery.index');
 
 Auth::routes();
 

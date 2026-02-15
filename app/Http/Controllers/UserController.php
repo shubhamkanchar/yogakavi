@@ -14,7 +14,7 @@ class UserController extends Controller
 {
     public function getDiet()
     {
-        $user = '';
+        $user = null;
         if (Auth::user()) {
             $user = Auth::user()->load('dietLead', 'yogaLead');
             // if (!Auth::user()->hasActivePlan('diet')) {
@@ -85,7 +85,7 @@ class UserController extends Controller
 
     public function getYoga()
     {
-        $user = '';
+        $user = null;
         if (Auth::user()) {
             $user = Auth::user()->load('yogaLead', 'dietLead');
             // if(!Auth::user()->hasActivePlan('yoga')){
@@ -179,6 +179,8 @@ class UserController extends Controller
                     'surgery' => $request->surgery,
                     'workout_type' => $request->workout_type,
                     'reason' => $request->reason,
+                    'time_slot' => $request->time_slot,
+                    'expertise_level' => $request->expertise_level,
                 ]
             );
 
@@ -217,6 +219,8 @@ class UserController extends Controller
                 'surgery' => $request->surgery,
                 'workout_type' => $request->workout_type,
                 'reason' => $request->reason,
+                'time_slot' => $request->time_slot,
+                'expertise_level' => $request->expertise_level,
             ]);
 
             return response()->json([

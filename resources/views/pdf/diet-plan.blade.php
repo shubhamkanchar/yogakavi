@@ -20,13 +20,13 @@
         <tr>
             <th>Day</th>
             <th>Breakfast</th>
-            <th>Wt (g)</th>
+            <th>Wt (g)/Quantity</th>
             <th>Lunch</th>
-            <th>Wt (g)</th>
+            <th>Wt (g)/Quantity</th>
             <th>Snacks</th>
-            <th>Wt (g)</th>
+            <th>Wt (g)/Quantity</th>
             <th>Dinner</th>
-            <th>Wt (g)</th>
+            <th>Wt (g)/Quantity</th>
         </tr>
     </thead>
     <tbody>

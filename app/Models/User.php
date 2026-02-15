@@ -128,7 +128,7 @@ class User extends Authenticatable
 
     public function hasActivePlan($type)
     {
-        // Use relationship instead of column
+        // Use relationship instead of column for real-time check
         $activePlans = $this->activeSubscriptions->pluck('plan_type')->toArray() ?? [];
         
         // Direct match
@@ -142,6 +142,22 @@ class User extends Authenticatable
         }
 
         return false;
+    }
+
+    public function hasHadTrial($type)
+    {
+        return $this->subscriptions()
+            ->where('plan_type', $type)
+            ->whereNotNull('trial_ends_at')
+            ->exists();
+    }
+
+    public function anySubscriptionForType($type)
+    {
+        return $this->subscriptions()
+            ->where('plan_type', $type)
+            ->latest()
+            ->first();
     }
 
     public function hasFilledForm($type)

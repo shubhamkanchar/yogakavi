@@ -3,16 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class YogaLead extends Model
+class LiveClass extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
-        'user_id',
-        'disease',
-        'surgery',
-        'workout_type',
-        'reason',
         'time_slot',
         'expertise_level',
+        'meeting_link',
+        'is_active',
     ];
 }

@@ -70,26 +70,18 @@ class SubscriptionController extends Controller
             }
         }
 
-        // If plan has trial and user hasn't had a trial for this plan type yet?
-        // For now, let's just create a trial if they don't have an active subscription of this type.
-        if ($plan->trial_days > 0 && !$user->hasActivePlan($plan->type)) {
+        // If plan has trial and user hasn't had a trial for this plan type yet.
+        if ($plan->trial_days > 0 && !$user->hasHadTrial($plan->type)) {
             Subscription::create([
                 'user_id' => $user->id,
                 'plan_id' => $plan->id,
+                'plan_type' => $plan->type,
                 'amount' => $plan->price, // Storing original price
                 'start_date' => now(),
                 'expiry_date' => now()->addDays($plan->interval_days + $plan->trial_days),
                 'trial_ends_at' => now()->addDays($plan->trial_days),
                 'status' => 'trial',
             ]);
-
-            // Update User Subscription Array
-            $currentSubs = $user->subscription ?? [];
-            if (!in_array($plan->type, $currentSubs)) {
-                $currentSubs[] = $plan->type;
-                $user->subscription = $currentSubs;
-                $user->save();
-            }
 
             session()->flash('success', 'Your ' . $plan->trial_days . ' days free trial has started!');
             
@@ -103,18 +95,14 @@ class SubscriptionController extends Controller
     {
         if ($plan->type === 'yoga') return route('form.yoga');
         if ($plan->type === 'diet') return route('form.diet');
-        return route('form.yoga'); // Fallback
+        return route('dashboard'); // Improved fallback
     }
 
     public function createOrder(Plan $plan)
     {
         $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
 
-        if($plan->discount_type && $plan->discount_value > 0) {
-            $amount = $plan->discounted_price * 100;
-        } else {
-            $amount = $plan->price * 100;
-        }
+        $amount = ($plan->discounted_price ?: $plan->price) * 100;
 
         $order = $api->order->create([
             'receipt' => (string) Str::uuid(),
@@ -123,7 +111,7 @@ class SubscriptionController extends Controller
         ]);
 
         return response()->json([
-            'id' => $order->id,        // 👈 REQUIRED
+            'id' => $order->id,
             'amount' => $order->amount
         ]);
     }
@@ -143,42 +131,33 @@ class SubscriptionController extends Controller
         }
 
         $user = auth()->user();
-        $subscription = $user->activeSubscription;
+        
+        // Find if there's an existing trial or pending subscription for this plan type
+        $subscription = $user->anySubscriptionForType($plan->type);
 
-        if ($subscription && $subscription->plan_id == $plan->id && ($subscription->status === 'trial' || $subscription->status === 'pending_payment')) {
-            // Convert trial/pending to active
+        if ($subscription && in_array($subscription->status, ['trial', 'pending_payment'])) {
+            // Update existing trial/pending to active
             $subscription->update([
+                'plan_id' => $plan->id, // Ensure it's the right plan if they switched mid-trial
                 'razorpay_order_id' => $request->razorpay_order_id,
                 'razorpay_payment_id' => $request->razorpay_payment_id,
+                'amount' => $plan->discounted_price ?: $plan->price,
                 'status' => 'active',
-                // Start date stays same? Or reset it? 
-                // User said: "when its trail period ended he need to make payment for that plan"
-                // Usually payment adds the full interval.
-                // If they pay during trial, do they get trial + interval? 
-                // Let's assume the interval starts from when they pay if trial ended, 
-                // or extends from trial ends if they pay early.
                 'expiry_date' => now()->addDays($plan->interval_days),
             ]);
         } else {
-            // New subscription
+            // Create new active subscription
             Subscription::create([
                 'user_id' => $user->id,
                 'plan_id' => $plan->id,
+                'plan_type' => $plan->type,
                 'razorpay_order_id' => $request->razorpay_order_id,
                 'razorpay_payment_id' => $request->razorpay_payment_id,
-                'amount' => $plan->price,
+                'amount' => $plan->discounted_price ?: $plan->price,
                 'start_date' => now(),
                 'expiry_date' => now()->addDays($plan->interval_days),
                 'status' => 'active',
             ]);
-        }
-
-        // Update User Subscription Array
-        $currentSubs = $user->subscription ?? [];
-        if (!in_array($plan->type, $currentSubs)) {
-            $currentSubs[] = $plan->type;
-            $user->subscription = $currentSubs;
-            $user->save();
         }
 
         session()->flash('success', 'Payment Successful! Your plan is now fully active.');

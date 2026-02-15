@@ -18,16 +18,22 @@
                     <a href="{{ route('welcome') }}#why-us" class="nav-link fw-bold px-3">About</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('welcome') }}#yoga" class="nav-link fw-bold px-3">Yoga</a>
+                    <a href="{{ route('form.yoga') }}" class="nav-link fw-bold px-3">Yoga</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('welcome') }}#diet" class="nav-link fw-bold px-3">Diet</a>
+                    <a href="{{ route('form.diet') }}" class="nav-link fw-bold px-3">Diet</a>
                 </li>
                  <li class="nav-item">
                     <a href="{{ route('welcome') }}#testimonials" class="nav-link fw-bold px-3">Stories</a>
                 </li>
-                 <li class="nav-item">
+                <li class="nav-item">
                     <a href="{{ route('welcome') }}#plans" class="nav-link fw-bold px-3">Plans</a>
+                </li>
+                 <li class="nav-item">
+                    <a href="{{ route('blogs.index') }}" class="nav-link fw-bold px-3 @if(request()->routeIs('blogs.*')) active @endif">Blogs</a>
+                </li>
+                  <li class="nav-item">
+                    <a href="{{ route('gallery.index') }}" class="nav-link fw-bold px-3 @if(request()->routeIs('gallery.index')) active @endif">Gallery</a>
                 </li>
                  <li class="nav-item">
                     <a href="{{ route('welcome') }}#contact" class="nav-link fw-bold px-3">Contact</a>

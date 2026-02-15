@@ -21,8 +21,10 @@ class DietController extends Controller
     public function store(Request $request)
     {
         $userId = User::where('uuid', $request->uuid)->value('id');
+        $daysCount = count($request->days);
         $dietPlan = DietPlan::create([
             'user_id'   => $userId,
+            'end_date'  => now()->addDays($daysCount),
         ]);
         foreach ($request->days as $index => $day) {
             // --- 1. STORE NEW MENU ITEMS ---
@@ -36,10 +38,14 @@ class DietController extends Controller
                 'user_id'   => $userId,
                 'diet_plan_id' => $dietPlan->id,
                 'day_number' => $index + 1,
-                'breakfast' => $breakfast,
+                'breakfast' => $breakfast, 
+                'breakfast_weight' => $day['breakfast_weight'],
                 'lunch'     => $lunch,
+                'lunch_weight' => $day['lunch_weight'],
                 'snacks'    => $snacks,
+                'snacks_weight' => $day['snacks_weight'],
                 'dinner'    => $dinner,
+                'dinner_weight' => $day['dinner_weight'],
             ]);
         }
 

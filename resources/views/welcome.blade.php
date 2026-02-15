@@ -4,10 +4,19 @@
     <style>
         /* --- Hero Section --- */
         .hero-section {
-            background: linear-gradient(135deg, #e0f7fa 0%, #fbe4eb 100%);
+            background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url('{{ asset('images/hero-bg.png') }}');
+            background-size: 120% auto;
+            background-position: center;
+            background-repeat: no-repeat;
             padding: 120px 0 80px;
             position: relative;
             overflow: hidden;
+            animation: moveBackground 60s linear infinite alternate;
+        }
+
+        @keyframes moveBackground {
+            0% { background-position: 0 50%; }
+            100% { background-position: 100% 50%; }
         }
 
         .hero-title {
@@ -205,7 +214,34 @@
 
     <!-- 1. HERO SECTION -->
     <header id="home" class="hero-section d-flex align-items-center text-center">
-        <div class="container" data-aos="fade-up">
+        <!-- Background Carousel -->
+        <div id="heroCarousel" class="carousel slide carousel-fade position-absolute w-100 h-100 top-0 start-0" data-bs-ride="carousel" style="z-index: 1;">
+            <div class="carousel-inner h-100">
+                <!-- Slide 1: Nature -->
+                <div class="carousel-item active h-100" data-bs-interval="5000">
+                    <div class="w-100 h-100" style="background: url('{{ asset('images/hero-bg.png') }}') center/cover no-repeat;"></div>
+                    <div class="position-absolute top-0 start-0 w-100 h-100" style="background: rgba(255,255,255,0.6);"></div>
+                </div>
+                <!-- Slide 2: Diet -->
+                <div class="carousel-item h-100" data-bs-interval="5000">
+                    <div class="w-100 h-100" style="background: url('{{ asset('images/hero-bg-diet.png') }}') center/cover no-repeat;"></div>
+                    <div class="position-absolute top-0 start-0 w-100 h-100" style="background: rgba(255,255,255,0.6);"></div>
+                </div>
+                <!-- Slide 3: Yoga Sunset -->
+                <div class="carousel-item h-100" data-bs-interval="5000">
+                    <div class="w-100 h-100" style="background: url('{{ asset('images/hero-bg-yoga-sunset.png') }}') center/cover no-repeat;"></div>
+                    <div class="position-absolute top-0 start-0 w-100 h-100" style="background: rgba(255,255,255,0.5);"></div>
+                </div>
+                <!-- Slide 4: Group Yoga -->
+                <div class="carousel-item h-100" data-bs-interval="5000">
+                    <div class="w-100 h-100" style="background: url('{{ asset('images/hero-bg-group.png') }}') center/cover no-repeat;"></div>
+                    <div class="position-absolute top-0 start-0 w-100 h-100" style="background: rgba(255,255,255,0.6);"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="container position-relative" data-aos="fade-up" style="z-index: 2;">
             <span class="badge bg-white text-primary shadow-sm rounded-pill px-3 py-2 mb-3 fw-bold text-uppercase" style="letter-spacing: 1px;">
                 Start Your Journey Today
             </span>

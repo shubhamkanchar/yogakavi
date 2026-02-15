@@ -66,6 +66,57 @@
             </div>
         </div>
 
+        @if($expiringDietPlans->isNotEmpty())
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="card shadow-sm border-0 border-start border-warning border-4">
+                    <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                        <h5 class="card-title mb-0 fw-bold text-warning"><i class="bi bi-exclamation-triangle-fill me-2"></i> Diet Plans Expiring Soon</h5>
+                        <span class="badge bg-warning text-dark">{{ $expiringDietPlans->count() }} Users</span>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0 align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>User</th>
+                                        <th>End Date</th>
+                                        <th class="text-end">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($expiringDietPlans as $plan)
+                                        <tr>
+                                            <td>
+                                                <div class="fw-medium">{{ $plan->user->full_name ?? 'Unknown User' }}</div>
+                                                <div class="small text-muted">{{ $plan->user->email ?? '' }}</div>
+                                            </td>
+                                            <td>
+                                                @php 
+                                                    $endDate = \Carbon\Carbon::parse($plan->end_date);
+                                                    $daysLeft = now()->startOfDay()->diffInDays($endDate->startOfDay(), false); 
+                                                @endphp
+                                                <span class="fw-bold {{ $daysLeft <= 0 ? 'text-danger' : 'text-warning' }}">
+                                                    {{ $endDate->format('d M, Y') }}
+                                                    <small class="d-block text-muted">({{ $daysLeft <= 0 ? 'Expired' : $daysLeft . ' days left' }})</small>
+                                                </span>
+                                            </td>
+                                            <td class="text-end">
+                                                <a href="{{ route('admin.diet.create', ['uuid' => $plan->user->uuid]) }}" class="btn btn-sm btn-primary rounded-pill px-3">
+                                                    Generate New Plan
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
+
         <!-- Detailed Tables -->
         <div class="row g-4">
             <!-- Top Spenders -->
@@ -186,6 +237,22 @@
                                 </a>
                             </div>
                         </div>
+
+                        @if(isset($liveClass) && $liveClass)
+                        <div class="mt-4 p-4 border rounded-3 bg-white shadow-sm border-start border-primary border-4">
+                            <div class="row align-items-center">
+                                <div class="col-md-8">
+                                    <h5 class="fw-bold mb-1">Your Live Class is Ready!</h5>
+                                    <p class="text-muted mb-0">Scheduled for matched slot: <strong>{{ $liveClass->time_slot }}</strong></p>
+                                </div>
+                                <div class="col-md-4 text-md-end">
+                                    <a href="{{ $liveClass->meeting_link }}" target="_blank" class="btn btn-success rounded-pill px-4 py-2 fw-bold">
+                                        <i class="bi bi-camera-video me-2"></i> Join Meeting
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>

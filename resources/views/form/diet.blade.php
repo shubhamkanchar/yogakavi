@@ -1,178 +1,166 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container py-4">
+    <div class="container py-5">
         <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header h3">Health & Diet Intake Form</div>
-                    <div class="card-body">
-                        <form id="fullForm" method="POST" action="{{ route('diet.lead') }}" novalidate>
-                            @csrf
-                            <div class="row">
-                                <div class="mb-3 col-md-6">
-                                    <label for="firstName" class="form-label">First Name <span
-                                            class="text-danger">*</span></label>
-                                    <input type="text" id="firstName" name="first_name" class="form-control" value="{{ old('first_name', $user->first_name ?? '') }}" required>
-                                </div>
-                                <div class="mb-3 col-md-6">
-                                    <label for="LastName" class="form-label">Last Name <span
-                                            class="text-danger">*</span></label>
-                                    <input type="text" id="LastName" name="last_name" class="form-control" value="{{ old('last_name', $user->last_name ?? '') }}" required>
-                                </div>
-                            </div>
+            <div class="col-lg-11">
+                <div class="card shadow-lg border overflow-hidden rounded-4">
+                    <div class="row g-0">
+                        <!-- Form Section -->
+                        <div class="col-lg-7 p-4 p-md-5">
+                            <h2 class="fw-bold mb-4 text-success">Health & Diet Intake</h2>
+                            <p class="text-muted mb-4">Let's create a personalized nutrition plan for you.</p>
 
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
-                                <input type="email" id="email" name="email" class="form-control" value="{{ old('email', $user->email ?? '') }}" required @if($user->email) readonly @endif>
-                            </div>
-
-                            @guest
-                            <div class="row">
-                                <div class="mb-3 col-md-6">
-                                    <label for="password" class="col-form-label">{{ __('Password') }}</label>
-                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="password-confirm" class="col-form-label">{{ __('Confirm Password') }}</label>
-                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                                </div>
-                            </div>
-                            @endguest
-
-                            <div class="row gx-3">
-                                <!-- Weight -->
-                                <div class="col-md-4 mb-3">
-                                    <label for="weight" class="form-label">Weight (kg) <span
-                                            class="text-danger">*</span></label>
-                                    <input id="weight" name="weight" type="number" min="1" step="0.1"
-                                        class="form-control" value="{{ old('weight', $user->weight ?? '') }}" placeholder="e.g. 70">
+                            <form id="fullForm" method="POST" action="{{ route('diet.lead') }}" novalidate>
+                                @csrf
+                                <div class="row">
+                                    <div class="mb-3 col-md-6">
+                                        <label for="firstName" class="form-label fw-semibold">First Name <span class="text-danger">*</span></label>
+                                        <input type="text" id="firstName" name="first_name" class="form-control bg-light border py-2" value="{{ old('first_name', optional($user)->first_name) }}" required>
+                                    </div>
+                                    <div class="mb-3 col-md-6">
+                                        <label for="LastName" class="form-label fw-semibold">Last Name <span class="text-danger">*</span></label>
+                                        <input type="text" id="LastName" name="last_name" class="form-control bg-light border py-2" value="{{ old('last_name', optional($user)->last_name) }}" required>
+                                    </div>
                                 </div>
 
-                                <!-- Height -->
-                                <div class="col-md-4 mb-3">
-                                    <label for="height" class="form-label">Height (cm) <span
-                                            class="text-danger">*</span></label>
-                                    <input id="height" name="height" type="number" min="1" class="form-control"
-                                        value="{{ old('height', $user->height ?? '') }}" placeholder="e.g. 170">
+                                <div class="mb-3">
+                                    <label for="email" class="form-label fw-semibold">Email <span class="text-danger">*</span></label>
+                                    <input type="email" id="email" name="email" class="form-control bg-light border py-2" value="{{ old('email', optional($user)->email) }}" required @if(optional($user)->email) readonly @endif>
                                 </div>
 
-                                <!-- Age -->
-                                <div class="col-md-4 mb-3">
-                                    <label for="age" class="form-label">Age <span class="text-danger">*</span></label>
-                                    <input id="age" name="age" type="number" min="1" class="form-control"
-                                        value="{{ old('age', $user->age ?? '') }}" placeholder="e.g. 30">
+                                @guest
+                                <div class="row">
+                                    <div class="mb-3 col-md-6">
+                                        <label for="password" class="form-label fw-semibold">{{ __('Password') }}</label>
+                                        <input id="password" type="password" class="form-control bg-light border py-2 @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="password-confirm" class="form-label fw-semibold">{{ __('Confirm Password') }}</label>
+                                        <input id="password-confirm" type="password" class="form-control bg-light border py-2" name="password_confirmation" required autocomplete="new-password">
+                                    </div>
                                 </div>
-                            </div>
+                                @endguest
 
-                            <div class="mb-3">
-                                <label for="phone" class="form-label">Phone (optional)</label>
-                                <input id="phone" name="phone" type="tel" class="form-control" value="{{ old('phone', $user->phone ?? '') }}"
-                                    placeholder="10-digit phone number">
-                            </div>
+                                <div class="row gx-3">
+                                    <!-- Weight -->
+                                    <div class="col-md-4 mb-3">
+                                        <label for="weight" class="form-label fw-semibold">Weight (kg) <span class="text-danger">*</span></label>
+                                        <input id="weight" name="weight" type="number" min="1" step="0.1" class="form-control bg-light border py-2" value="{{ old('weight', optional($user)->weight) }}" placeholder="e.g. 70">
+                                    </div>
 
-                            <!-- Past Surgery -->
-                            <div class="mb-3">
-                                <label for="past_surgery" class="form-label">Any Past Surgery? <span
-                                        class="text-danger">*</span></label>
-                                @php
-                                    $ps = old('past_surgery', $user->dietLead->past_surgery ?? (isset($user->yogaLead->surgery) ? strtolower($user->yogaLead->surgery) : ''));
-                                @endphp
-                                <select id="past_surgery" name="past_surgery" class="form-select">
-                                    <option value="">Select</option>
-                                    <option value="no" {{ $ps === 'no' ? 'selected' : '' }}>No</option>
-                                    <option value="yes" {{ $ps === 'yes' ? 'selected' : '' }}>Yes</option>
-                                </select>
-                            </div>
+                                    <!-- Height -->
+                                    <div class="col-md-4 mb-3">
+                                        <label for="height" class="form-label fw-semibold">Height (cm) <span class="text-danger">*</span></label>
+                                        <input id="height" name="height" type="number" min="1" class="form-control bg-light border py-2" value="{{ old('height', optional($user)->height) }}" placeholder="e.g. 170">
+                                    </div>
 
-                            <!-- Surgery details (conditional) -->
-                            <div id="surgery_details_wrap" class="mb-3" style="display:none;">
-                                <label for="surgery_details" class="form-label">If yes, please list surgeries / details
-                                    <span class="text-danger">*</span></label>
-                                <textarea id="surgery_details" name="surgery_details" class="form-control" rows="2"
-                                    placeholder="Surgery details...">{{ old('surgery_details', $user->dietLead->surgery_details ?? '') }}</textarea>
-                            </div>
+                                    <!-- Age -->
+                                    <div class="col-md-4 mb-3">
+                                        <label for="age" class="form-label fw-semibold">Age <span class="text-danger">*</span></label>
+                                        <input id="age" name="age" type="number" min="1" class="form-control bg-light border py-2" value="{{ old('age', optional($user)->age) }}" placeholder="e.g. 30">
+                                    </div>
+                                </div>
 
-                            <!-- Thyroid -->
-                            <div class="mb-3">
-                                <label for="thyroid" class="form-label">Do you have thyroid? <span
-                                        class="text-danger">*</span></label>
-                                <select id="thyroid" name="thyroid" class="form-select">
-                                    <option value="">Select</option>
-                                    <option value="no" {{ old('thyroid', $user->dietLead->thyroid ?? '') === 'no' ? 'selected' : '' }}>No</option>
-                                    <option value="yes" {{ old('thyroid', $user->dietLead->thyroid ?? '') === 'yes' ? 'selected' : '' }}>Yes</option>
-                                </select>
-                            </div>
+                                <div class="mb-3">
+                                    <label for="phone" class="form-label fw-semibold">Phone (optional)</label>
+                                    <input id="phone" name="phone" type="tel" class="form-control bg-light border py-2" value="{{ old('phone', optional($user)->phone) }}" placeholder="10-digit phone number">
+                                </div>
 
-                            <!-- Diet Preference -->
-                            <div class="mb-3">
-                                <label for="diet_pref" class="form-label">Diet Preference <span
-                                        class="text-danger">*</span></label>
-                                <select id="diet_pref" name="diet_pref" class="form-select">
-                                    <option value="">Select</option>
-                                    <option value="vegetarian" {{ old('diet_pref', $user->dietLead->diet_pref ?? '') === 'vegetarian' ? 'selected' : '' }}>Vegetarian</option>
-                                    <option value="non-vegetarian" {{ old('diet_pref', $user->dietLead->diet_pref ?? '') === 'non-vegetarian' ? 'selected' : '' }}>Non-vegetarian</option>
-                                    <option value="eggetarian" {{ old('diet_pref', $user->dietLead->diet_pref ?? '') === 'eggetarian' ? 'selected' : '' }}>Eggetarian</option>
-                                    <option value="other" {{ old('diet_pref', $user->dietLead->diet_pref ?? '') === 'other' ? 'selected' : '' }}>Other</option>
-                                </select>
-                            </div>
+                                <!-- Past Surgery -->
+                                <div class="mb-3">
+                                    <label for="past_surgery" class="form-label fw-semibold">Any Past Surgery? <span class="text-danger">*</span></label>
+                                    @php
+                                        $ps = old('past_surgery', data_get($user, 'dietLead.past_surgery') ?? (data_get($user, 'yogaLead.surgery') ? strtolower(data_get($user, 'yogaLead.surgery')) : ''));
+                                    @endphp
+                                    <select id="past_surgery" name="past_surgery" class="form-select bg-light border py-2">
+                                        <option value="">Select</option>
+                                        <option value="no" {{ $ps === 'no' ? 'selected' : '' }}>No</option>
+                                        <option value="yes" {{ $ps === 'yes' ? 'selected' : '' }}>Yes</option>
+                                    </select>
+                                </div>
 
-                            <!-- Routine -->
-                            <div class="mb-3">
-                                <label for="routine" class="form-label">Daily workout / walking routine <span
-                                        class="text-danger">*</span></label>
-                                <input id="routine" name="routine" type="text" class="form-control"
-                                    value="{{ old('routine', $user->dietLead->routine ?? '') }}"
-                                    placeholder="e.g. 30 mins walking / gym 3x week">
-                            </div>
+                                <!-- Surgery details (conditional) -->
+                                <div id="surgery_details_wrap" class="mb-3" style="display:none;">
+                                    <label for="surgery_details" class="form-label fw-semibold">If yes, please list surgeries / details <span class="text-danger">*</span></label>
+                                    <textarea id="surgery_details" name="surgery_details" class="form-control bg-light border py-2" rows="2" placeholder="Surgery details...">{{ old('surgery_details', data_get($user, 'dietLead.surgery_details')) }}</textarea>
+                                </div>
 
-                            <!-- Allergy -->
-                            <div class="mb-3">
-                                <label for="allergy" class="form-label">Any food allergy? <span
-                                        class="text-danger">*</span></label>
-                                <select id="allergy" name="allergy" class="form-select">
-                                    <option value="">Select</option>
-                                    <option value="no" {{ old('allergy', $user->dietLead->allergy ?? '') === 'no' ? 'selected' : '' }}>No</option>
-                                    <option value="yes" {{ old('allergy', $user->dietLead->allergy ?? '') === 'yes' ? 'selected' : '' }}>Yes</option>
-                                    <option value="other" {{ old('allergy', $user->dietLead->allergy ?? '') === 'other' ? 'selected' : '' }}>Other</option>
-                                </select>
-                            </div>
+                                <!-- Thyroid -->
+                                <div class="mb-3">
+                                    <label for="thyroid" class="form-label fw-semibold">Do you have thyroid? <span class="text-danger">*</span></label>
+                                    <select id="thyroid" name="thyroid" class="form-select bg-light border py-2">
+                                        <option value="">Select</option>
+                                        <option value="no" {{ old('thyroid', data_get($user, 'dietLead.thyroid')) === 'no' ? 'selected' : '' }}>No</option>
+                                        <option value="yes" {{ old('thyroid', data_get($user, 'dietLead.thyroid')) === 'yes' ? 'selected' : '' }}>Yes</option>
+                                    </select>
+                                </div>
 
-                            <!-- Allergy details (conditional) -->
-                            <div id="allergy_details_wrap" class="mb-3" style="display:none;">
-                                <label for="allergy_details" class="form-label">If yes / other, please specify <span
-                                        class="text-danger">*</span></label>
-                                <textarea id="allergy_details" name="allergy_details" class="form-control" rows="2"
-                                    placeholder="Allergy details...">{{ old('allergy_details', $user->dietLead->allergy_details ?? '') }}</textarea>
-                            </div>
+                                <!-- Diet Preference -->
+                                <div class="mb-3">
+                                    <label for="diet_pref" class="form-label fw-semibold">Diet Preference <span class="text-danger">*</span></label>
+                                    <select id="diet_pref" name="diet_pref" class="form-select bg-light border py-2">
+                                        <option value="">Select</option>
+                                        <option value="vegetarian" {{ old('diet_pref', data_get($user, 'dietLead.diet_pref')) === 'vegetarian' ? 'selected' : '' }}>Vegetarian</option>
+                                        <option value="non-vegetarian" {{ old('diet_pref', data_get($user, 'dietLead.diet_pref')) === 'non-vegetarian' ? 'selected' : '' }}>Non-vegetarian</option>
+                                        <option value="eggetarian" {{ old('diet_pref', data_get($user, 'dietLead.diet_pref')) === 'eggetarian' ? 'selected' : '' }}>Eggetarian</option>
+                                        <option value="other" {{ old('diet_pref', data_get($user, 'dietLead.diet_pref')) === 'other' ? 'selected' : '' }}>Other</option>
+                                    </select>
+                                </div>
 
-                            <!-- Occupation -->
-                            <div class="mb-3">
-                                <label for="occupation" class="form-label">Current occupation <span
-                                        class="text-danger">*</span></label>
-                                <select id="occupation" name="occupation" class="form-select">
-                                    <option value="">Select</option>
-                                    <option value="employee" {{ old('occupation', $user->dietLead->occupation ?? '') === 'employee' ? 'selected' : '' }}>Employee</option>
-                                    <option value="housewife" {{ old('occupation', $user->dietLead->occupation ?? '') === 'housewife' ? 'selected' : '' }}>Housewife / Homemaker</option>
-                                    <option value="retired" {{ old('occupation', $user->dietLead->occupation ?? '') === 'retired' ? 'selected' : '' }}>Retired</option>
-                                    <option value="student" {{ old('occupation', $user->dietLead->occupation ?? '') === 'student' ? 'selected' : '' }}>Student</option>
-                                    <option value="self-employed" {{ old('occupation', $user->dietLead->occupation ?? '') === 'self-employed' ? 'selected' : '' }}>Self-employed</option>
-                                    <option value="other" {{ old('occupation', $user->dietLead->occupation ?? '') === 'other' ? 'selected' : '' }}>Other</option>
-                                </select>
-                            </div>
+                                <!-- Routine -->
+                                <div class="mb-3">
+                                    <label for="routine" class="form-label fw-semibold">Daily workout / walking routine <span class="text-danger">*</span></label>
+                                    <input id="routine" name="routine" type="text" class="form-control bg-light border py-2" value="{{ old('routine', data_get($user, 'dietLead.routine')) }}" placeholder="e.g. 30 mins walking / gym 3x week">
+                                </div>
 
-                            
+                                <!-- Allergy -->
+                                <div class="mb-3">
+                                    <label for="allergy" class="form-label fw-semibold">Any food allergy? <span class="text-danger">*</span></label>
+                                    <select id="allergy" name="allergy" class="form-select bg-light border py-2">
+                                        <option value="">Select</option>
+                                        <option value="no" {{ old('allergy', data_get($user, 'dietLead.allergy')) === 'no' ? 'selected' : '' }}>No</option>
+                                        <option value="yes" {{ old('allergy', data_get($user, 'dietLead.allergy')) === 'yes' ? 'selected' : '' }}>Yes</option>
+                                        <option value="other" {{ old('allergy', data_get($user, 'dietLead.allergy')) === 'other' ? 'selected' : '' }}>Other</option>
+                                    </select>
+                                </div>
 
-                            <div class="mb-4">
-                                <label for="notes" class="form-label">Any additional notes (optional)</label>
-                                <textarea id="notes" name="notes" class="form-control" rows="3" placeholder="Add anything else...">{{ old('notes', $user->dietLead->notes ?? '') }}</textarea>
-                            </div>
+                                <!-- Allergy details (conditional) -->
+                                <div id="allergy_details_wrap" class="mb-3" style="display:none;">
+                                    <label for="allergy_details" class="form-label fw-semibold">If yes / other, please specify <span class="text-danger">*</span></label>
+                                    <textarea id="allergy_details" name="allergy_details" class="form-control bg-light border py-2" rows="2" placeholder="Allergy details...">{{ old('allergy_details', data_get($user, 'dietLead.allergy_details')) }}</textarea>
+                                </div>
 
-                            <div class="d-flex gap-2">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
+                                <!-- Occupation -->
+                                <div class="mb-3">
+                                    <label for="occupation" class="form-label fw-semibold">Current occupation <span class="text-danger">*</span></label>
+                                    <select id="occupation" name="occupation" class="form-select bg-light border py-2">
+                                        <option value="">Select</option>
+                                        <option value="employee" {{ old('occupation', data_get($user, 'dietLead.occupation')) === 'employee' ? 'selected' : '' }}>Employee</option>
+                                        <option value="housewife" {{ old('occupation', data_get($user, 'dietLead.occupation')) === 'housewife' ? 'selected' : '' }}>Housewife / Homemaker</option>
+                                        <option value="retired" {{ old('occupation', data_get($user, 'dietLead.occupation')) === 'retired' ? 'selected' : '' }}>Retired</option>
+                                        <option value="student" {{ old('occupation', data_get($user, 'dietLead.occupation')) === 'student' ? 'selected' : '' }}>Student</option>
+                                        <option value="self-employed" {{ old('occupation', data_get($user, 'dietLead.occupation')) === 'self-employed' ? 'selected' : '' }}>Self-employed</option>
+                                        <option value="other" {{ old('occupation', data_get($user, 'dietLead.occupation')) === 'other' ? 'selected' : '' }}>Other</option>
+                                    </select>
+                                </div>
 
-                        </form>
+                                <div class="mb-4">
+                                    <label for="notes" class="form-label fw-semibold">Any additional notes (optional)</label>
+                                    <textarea id="notes" name="notes" class="form-control bg-light border py-2" rows="3" placeholder="Add anything else...">{{ old('notes', data_get($user, 'dietLead.notes')) }}</textarea>
+                                </div>
+
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary py-3 fw-bold rounded-3">Get My Diet Plan</button>
+                                </div>
+
+                            </form>
+                        </div>
+
+                        <!-- Image Section -->
+                        <div class="col-lg-5 d-none d-lg-block">
+                             <div class="h-100 w-100" style="background-image: url('{{ asset('storage/artifacts/healthy_diet_fresh_food.png') }}'); background-size: cover; background-position: center;"></div>
+                        </div>
                     </div>
                 </div>
             </div>

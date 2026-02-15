@@ -79,6 +79,9 @@
         .content.full {
             margin-left: 60px;
         }
+        .ck-editor__editable_inline {
+    min-height: 300px;
+}
     </style>
     @yield('style')
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])

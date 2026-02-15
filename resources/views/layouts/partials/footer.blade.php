@@ -34,8 +34,8 @@
             <div class="col-lg-2 col-md-6 col-6">
                 <h6 class="fw-bold mb-3 text-uppercase text-primary" style="font-size: 0.85rem; letter-spacing: 1px;">Programs</h6>
                 <ul class="list-unstyled text-white-50 small">
-                    <li class="mb-2"><a href="{{ route('welcome') }}#yoga" class="text-reset text-decoration-none hover-text-white">Yoga Batches</a></li>
-                    <li class="mb-2"><a href="{{ route('welcome') }}#diet" class="text-reset text-decoration-none hover-text-white">Diet Plans</a></li>
+                    <li class="mb-2"><a href="{{ route('form.yoga') }}" class="text-reset text-decoration-none hover-text-white">Yoga Batches</a></li>
+                    <li class="mb-2"><a href="{{ route('form.diet') }}" class="text-reset text-decoration-none hover-text-white">Diet Plans</a></li>
                     <li class="mb-2"><a href="{{ route('welcome') }}#plans" class="text-reset text-decoration-none hover-text-white">Combo Plans</a></li>
                     <li class="mb-2"><a href="#" class="text-reset text-decoration-none hover-text-white">Corporate Wellness</a></li>
                 </ul>

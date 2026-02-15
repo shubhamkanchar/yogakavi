@@ -67,9 +67,9 @@
                     </div>
 
                     <div class="col-md-2">
-                        <label class="form-label">Weight (g)</label>
+                        <label class="form-label">Weight (g)/Quantity</label>
                         <input type="number" min="0" class="form-control meal-weight"
-                            data-name="days[0][breakfast_weight]" placeholder="grams">
+                            data-name="days[0][breakfast_weight]" placeholder="grams/quantity">
                     </div>
 
                     <!-- Lunch -->
@@ -86,9 +86,9 @@
                     </div>
 
                     <div class="col-md-2">
-                        <label class="form-label">Weight (g)</label>
+                        <label class="form-label">Weight (g)/Quantity</label>
                         <input type="number" min="0" class="form-control meal-weight"
-                            data-name="days[0][lunch_weight]" placeholder="grams">
+                            data-name="days[0][lunch_weight]" placeholder="grams/quantity">
                     </div>
 
                     <!-- Snacks -->
@@ -105,9 +105,9 @@
                     </div>
 
                     <div class="col-md-2">
-                        <label class="form-label">Weight (g)</label>
+                        <label class="form-label">Weight (g)/Quantity</label>
                         <input type="number" min="0" class="form-control meal-weight"
-                            data-name="days[0][snacks_weight]" placeholder="grams">
+                            data-name="days[0][snacks_weight]" placeholder="grams/quantity">
                     </div>
 
                     <!-- Dinner -->
@@ -124,9 +124,9 @@
                     </div>
 
                     <div class="col-md-2">
-                        <label class="form-label">Weight (g)</label>
+                        <label class="form-label">Weight (g)/Quantity</label>
                         <input type="number" min="0" class="form-control meal-weight"
-                            data-name="days[0][dinner_weight]" placeholder="grams">
+                            data-name="days[0][dinner_weight]" placeholder="grams/quantity">
                     </div>
 
                 </div>
