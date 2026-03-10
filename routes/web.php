@@ -72,7 +72,7 @@ Route::name('admin.')->middleware('auth')->group(function () {
     });
 });
 
-Route::get('/gallery', [\App\Http\Controllers\GalleryController::class, 'index'])->name('gallery.index');
+Route::get('/galleries', [\App\Http\Controllers\GalleryController::class, 'index'])->name('gallery.index');
 
 Auth::routes();
 

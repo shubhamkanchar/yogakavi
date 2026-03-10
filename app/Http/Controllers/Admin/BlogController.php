@@ -46,7 +46,7 @@ class BlogController extends Controller
         $data['is_published'] = $request->has('is_published');
 
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->move('blogs', 'public');
+            $path = $request->file('image')->move('blogs', $request->file('image')->getClientOriginalName());
             $data['image'] = $path;
         }
 
@@ -83,10 +83,10 @@ class BlogController extends Controller
 
         if ($request->hasFile('image')) {
             // Delete old image
-            if ($blog->image) {
-                Storage::disk('public')->delete($blog->image);
+            if (file_exists($blog->image)) {
+                unlink($blog->image);
             }
-            $path = $request->file('image')->move('blogs', 'public');
+            $path = $request->file('image')->move('blogs', $request->file('image')->getClientOriginalName());
             $data['image'] = $path;
         }
 
@@ -100,8 +100,8 @@ class BlogController extends Controller
      */
     public function destroy(Blog $blog)
     {
-        if ($blog->image) {
-            Storage::disk('public')->delete($blog->image);
+        if (file_exists($blog->image)) {
+            unlink($blog->image);
         }
         $blog->delete();
 

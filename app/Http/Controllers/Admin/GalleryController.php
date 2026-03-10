@@ -23,26 +23,39 @@ class GalleryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'type' => 'required|in:image,video,youtube',
             'title' => 'nullable|string|max:255',
             'description' => 'nullable|string',
         ]);
 
-        $path = $request->file('image')->store('gallery', 'public');
+        if ($request->type === 'youtube') {
+            $request->validate([
+                'youtube_link' => 'required|url'
+            ]);
+            $path = null;
+        } else {
+            $mimeTypes = $request->type === 'video' ? 'mimes:mp4,mov,ogg,qt|max:20480' : 'mimes:jpeg,png,jpg,gif,svg|max:2048';
+            $request->validate([
+                'image' => 'required|file|' . $mimeTypes
+            ]);
+            $path = $request->file('image')->move('gallery', $request->file('image')->getClientOriginalName());
+        }
 
         Gallery::create([
+            'type' => $request->type,
+            'youtube_link' => $request->type === 'youtube' ? $request->youtube_link : null,
             'image' => $path,
             'title' => $request->title,
             'description' => $request->description,
         ]);
 
-        return redirect()->route('admin.gallery.index')->with('success', 'Image uploaded successfully!');
+        return redirect()->route('admin.gallery.index')->with('success', 'Media added successfully!');
     }
 
     public function destroy(Gallery $gallery)
     {
-        if (Storage::disk('public')->exists($gallery->image)) {
-            Storage::disk('public')->delete($gallery->image);
+        if ($gallery->type !== 'youtube' && file_exists($gallery->image)) {
+            unlink($gallery->image);
         }
         $gallery->delete();
 

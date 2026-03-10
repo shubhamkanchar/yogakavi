@@ -4,7 +4,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="fw-bold">Gallery Management</h2>
         <a href="{{ route('admin.gallery.create') }}" class="btn btn-primary rounded-pill px-4 fw-bold shadow-sm">
-            <i class="bi bi-plus-lg me-2"></i> Add Image
+            <i class="bi bi-plus-lg me-2"></i> Add Media
         </a>
     </div>
 
@@ -21,40 +21,55 @@
                 <table class="table table-hover align-middle mb-0">
                     <thead class="table-light">
                         <tr>
-                            <th class="ps-4">Image</th>
-                            <th>Title</th>
+                            <th class="ps-4">Media</th>
+                            <th>Details</th>
                             <th>Status</th>
                             <th>Created At</th>
                             <th class="text-end pe-4">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($images as $image)
+                        @forelse($images as $item)
                         <tr>
                             <td class="ps-4">
-                                <img src="{{ asset('storage/' . $image->image) }}" class="rounded shadow-sm" style="width: 80px; height: 50px; object-fit: cover;">
+                                @if($item->type === 'video')
+                                    <div class="bg-dark rounded shadow-sm d-flex align-items-center justify-content-center" style="width: 80px; height: 50px;">
+                                        <i class="bi bi-play-circle text-white fs-4"></i>
+                                    </div>
+                                @else
+                                    <img src="{{ $item->image_url }}" class="rounded shadow-sm" style="width: 80px; height: 50px; object-fit: cover;">
+                                @endif
                             </td>
                             <td>
-                                <div class="fw-bold text-dark">{{ $image->title ?? 'No Title' }}</div>
-                                <div class="small text-muted">{{ Str::limit($image->description, 50) }}</div>
+                                <div class="fw-bold text-dark">
+                                    {{ $item->title ?? 'No Title' }}
+                                    @if($item->type === 'image')
+                                        <span class="badge bg-secondary ms-1" style="font-size: 0.65em;">Image</span>
+                                    @elseif($item->type === 'video')
+                                        <span class="badge bg-info text-dark ms-1" style="font-size: 0.65em;">Video</span>
+                                    @elseif($item->type === 'youtube')
+                                        <span class="badge bg-danger ms-1" style="font-size: 0.65em;">YouTube</span>
+                                    @endif
+                                </div>
+                                <div class="small text-muted">{{ Str::limit($item->description, 50) }}</div>
                             </td>
                             <td>
-                                @if($image->is_active)
+                                @if($item->is_active)
                                     <span class="badge bg-success-subtle text-success px-3 py-2 rounded-pill">Active</span>
                                 @else
                                     <span class="badge bg-danger-subtle text-danger px-3 py-2 rounded-pill">Inactive</span>
                                 @endif
                             </td>
-                            <td>{{ $image->created_at->format('d M, Y') }}</td>
+                            <td>{{ $item->created_at->format('d M, Y') }}</td>
                             <td class="text-end pe-4">
                                 <div class="d-flex justify-content-end gap-2">
-                                    <form action="{{ route('admin.gallery.toggle', $image->id) }}" method="POST">
+                                    <form action="{{ route('admin.gallery.toggle', $item->id) }}" method="POST">
                                         @csrf
                                         <button type="submit" class="btn btn-sm btn-outline-info rounded-pill px-3">
-                                            {{ $image->is_active ? 'Deactivate' : 'Activate' }}
+                                            {{ $item->is_active ? 'Deactivate' : 'Activate' }}
                                         </button>
                                     </form>
-                                    <form action="{{ route('admin.gallery.destroy', $image->id) }}" method="POST" onsubmit="return confirm('Are you sure?')">
+                                    <form action="{{ route('admin.gallery.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Are you sure?')">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-3">
@@ -68,7 +83,7 @@
                         <tr>
                             <td colspan="5" class="text-center py-5 text-muted">
                                 <i class="bi bi-images fs-1 d-block mb-3 opacity-25"></i>
-                                No images found in the gallery.
+                                No media found in the gallery.
                             </td>
                         </tr>
                         @endforelse
