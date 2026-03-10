@@ -226,9 +226,15 @@
                                         @endforeach
                                     </div>
                                 @else
-                                    <span class="badge bg-secondary px-3 py-2 fs-6">
-                                        No Active Plan
-                                    </span>
+                                    @if(Auth::user()->isNewYogaUserOnTrial())
+                                        <span class="badge bg-info text-dark px-3 py-2 fs-6 shadow-sm border border-info">
+                                            <i class="bi bi-gift-fill me-1"></i> 2-Day Free Trial Active
+                                        </span>
+                                    @else
+                                        <span class="badge bg-secondary px-3 py-2 fs-6">
+                                            No Active Plan
+                                        </span>
+                                    @endif
                                 @endif
                             </div>
                             <div class="col-md-6 text-md-end">

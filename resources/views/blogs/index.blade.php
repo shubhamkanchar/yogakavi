@@ -15,7 +15,7 @@
                 <div class="card h-100 shadow-sm border-0 rounded-4 overflow-hidden hover-card">
                     <a href="{{ route('blogs.show', $blog->slug) }}" class="text-decoration-none text-dark">
                         @if($blog->image)
-                            <img src="{{ Storage::url($blog->image) }}" class="card-img-top" alt="{{ $blog->title }}" style="height: 200px; object-fit: cover;">
+                            <img src="{{ asset($blog->image) }}" class="card-img-top" alt="{{ $blog->title }}" style="height: 200px; object-fit: cover;">
                         @else
                             <div class="bg-secondary bg-opacity-10 d-flex align-items-center justify-content-center" style="height: 200px;">
                                 <i class="bi bi-image text-muted fs-1"></i>

@@ -54,13 +54,13 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="col-md-2">
+                            <!-- <div class="col-md-2">
                                 <label for="trial_days" class="form-label">Trial (Days)</label>
                                 <input type="number" class="form-control @error('trial_days') is-invalid @enderror" id="trial_days" name="trial_days" value="{{ old('trial_days', 0) }}" required min="0" placeholder="0">
                                 @error('trial_days')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
-                            </div>
+                            </div> -->
                         </div>
 
                         <div class="row mb-3">

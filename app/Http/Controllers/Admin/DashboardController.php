@@ -32,7 +32,7 @@ class DashboardController extends Controller
 
             // Fetch Live Class if user has yoga plan and filled form
             $liveClass = null;
-            if (($user->hasActivePlan('yoga') || $user->hasActivePlan('combo') || $user->hasActivePlan('personal')) && $user->yogaLead) {
+            if (($user->hasActivePlan('yoga') || $user->hasActivePlan('combo') || $user->hasActivePlan('personal') || $user->isNewYogaUserOnTrial()) && $user->yogaLead) {
                 $liveClass = \App\Models\LiveClass::where('is_active', true)
                     ->where('time_slot', $user->yogaLead->time_slot)
                     ->first();

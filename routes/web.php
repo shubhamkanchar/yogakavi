@@ -30,7 +30,7 @@ Route::post('/razorpay/webhook', [WebhookController::class, 'handle']);
 Route::get('/secure-image/{filename}', [LandingController::class, 'show'])->name('secure-image');
 
 // Public Blog Routes
-Route::get('/blogs', [\App\Http\Controllers\BlogController::class, 'index'])->name('blogs.index');
+Route::get('/all-blogs', [\App\Http\Controllers\BlogController::class, 'index'])->name('blogs.index');
 Route::get('/blogs/{slug}', [\App\Http\Controllers\BlogController::class, 'show'])->name('blogs.show');
 
 Route::middleware(['auth'])->group(function () {

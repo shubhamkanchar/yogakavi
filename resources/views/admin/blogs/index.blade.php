@@ -35,7 +35,7 @@
                         <tr>
                             <td>
                                 @if($blog->image)
-                                    <img src="{{ Storage::url($blog->image) }}" alt="{{ $blog->title }}" class="rounded" width="50" height="50" style="object-fit: cover;">
+                                    <img src="{{ asset($blog->image) }}" alt="{{ $blog->title }}" class="rounded" width="50" height="50" style="object-fit: cover;">
                                 @else
                                     <span class="text-muted">No Image</span>
                                 @endif

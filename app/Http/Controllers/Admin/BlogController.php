@@ -46,7 +46,7 @@ class BlogController extends Controller
         $data['is_published'] = $request->has('is_published');
 
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('blogs', 'public');
+            $path = $request->file('image')->move('blogs', 'public');
             $data['image'] = $path;
         }
 
@@ -86,7 +86,7 @@ class BlogController extends Controller
             if ($blog->image) {
                 Storage::disk('public')->delete($blog->image);
             }
-            $path = $request->file('image')->store('blogs', 'public');
+            $path = $request->file('image')->move('blogs', 'public');
             $data['image'] = $path;
         }
 

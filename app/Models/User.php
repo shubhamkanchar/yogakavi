@@ -144,6 +144,14 @@ class User extends Authenticatable
         return false;
     }
 
+    public function isNewYogaUserOnTrial()
+    {
+        return $this->created_at && 
+               $this->created_at->diffInHours(now()) <= 48 && 
+               $this->hasFilledForm('yoga') &&
+               !$this->hasHadTrial('yoga');
+    }
+
     public function hasHadTrial($type)
     {
         return $this->subscriptions()

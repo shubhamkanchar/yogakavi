@@ -39,7 +39,7 @@
                                 <label for="image" class="form-label">Featured Image</label>
                                 @if($blog->image)
                                     <div class="mb-2">
-                                        <img src="{{ Storage::url($blog->image) }}" alt="Current Image" class="img-thumbnail" style="max-height: 150px;">
+                                        <img src="{{ asset($blog->image) }}" alt="Current Image" class="img-thumbnail" style="max-height: 150px;">
                                     </div>
                                 @endif
                                 <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" accept="image/*">

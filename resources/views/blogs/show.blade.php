@@ -17,7 +17,7 @@
 
                 <!-- Featured Image -->
                 @if($blog->image)
-                    <img src="{{ Storage::url($blog->image) }}" class="img-fluid rounded-4 mb-4 w-100 shadow-sm" alt="{{ $blog->title }}">
+                    <img src="{{ asset($blog->image) }}" class="img-fluid rounded-4 mb-4 w-100 shadow-sm" alt="{{ $blog->title }}">
                 @endif
 
                 <!-- Content -->
