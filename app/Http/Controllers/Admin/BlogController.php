@@ -107,4 +107,24 @@ class BlogController extends Controller
 
         return redirect()->route('admin.blogs.index')->with('success', 'Blog deleted successfully.');
     }
+
+    /**
+     * Handle CKEditor image upload.
+     */
+    public function upload(Request $request)
+    {
+        if ($request->hasFile('upload')) {
+            $originName = $request->file('upload')->getClientOriginalName();
+            $fileName = pathinfo($originName, PATHINFO_FILENAME);
+            $extension = $request->file('upload')->getClientOriginalExtension();
+            $fileName = $fileName . '_' . time() . '.' . $extension;
+
+            $request->file('upload')->move(public_path('blogs'), $fileName);
+
+            $url = asset('blogs/' . $fileName);
+
+            return response()->json(['url' => $url]);
+        }
+        return response()->json(['error' => ['message' => 'Upload failed']]);
+    }
 }

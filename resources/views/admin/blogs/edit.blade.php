@@ -82,7 +82,11 @@
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
     <script>
         ClassicEditor
-            .create( document.querySelector( '#content' ) )
+            .create( document.querySelector( '#content' ), {
+                ckfinder: {
+                    uploadUrl: "{{ route('admin.blogs.upload', ['_token' => csrf_token() ]) }}"
+                }
+            } )
             .catch( error => {
                 console.error( error );
             } );

@@ -66,6 +66,7 @@ Route::name('admin.')->middleware('auth')->group(function () {
     Route::resource('live_classes', LiveClassController::class);
 
     Route::prefix('admin')->group(function () {
+        Route::post('blogs/upload', [\App\Http\Controllers\Admin\BlogController::class, 'upload'])->name('blogs.upload');
         Route::resource('blogs', \App\Http\Controllers\Admin\BlogController::class);
         Route::resource('gallery', \App\Http\Controllers\Admin\GalleryController::class);
         Route::post('/gallery/{gallery}/toggle', [\App\Http\Controllers\Admin\GalleryController::class, 'toggleStatus'])->name('gallery.toggle');
