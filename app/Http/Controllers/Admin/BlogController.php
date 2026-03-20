@@ -123,8 +123,15 @@ class BlogController extends Controller
 
             $url = asset('blogs/' . $fileName);
 
-            return response()->json(['url' => $url]);
+            return response()->json([
+                'uploaded' => 1,
+                'fileName' => $fileName,
+                'url' => $url
+            ]);
         }
-        return response()->json(['error' => ['message' => 'Upload failed']]);
+        return response()->json([
+            'uploaded' => 0,
+            'error' => ['message' => 'Upload failed']
+        ]);
     }
 }
