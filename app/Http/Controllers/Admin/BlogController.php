@@ -119,7 +119,7 @@ class BlogController extends Controller
             $extension = $request->file('upload')->getClientOriginalExtension();
             $fileName = $fileName . '_' . time() . '.' . $extension;
 
-            $request->file('upload')->move(public_path('blogs'), $fileName);
+            $request->file('upload')->move('blogs', $fileName);
 
             $url = asset('blogs/' . $fileName);
 
