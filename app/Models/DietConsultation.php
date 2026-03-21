@@ -15,6 +15,7 @@ class DietConsultation extends Model
         'phone',
         'call_back_datetime',
         'status',
+        'is_contacted',
         'razorpay_order_id',
         'razorpay_payment_id',
     ];

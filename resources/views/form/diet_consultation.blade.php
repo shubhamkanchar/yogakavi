@@ -54,6 +54,11 @@
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script type="module">
     $(document).ready(function() {
+        // Set min datetime to current local time to disable past dates/time
+        let now = new Date();
+        now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+        $('#call_back_datetime').attr('min', now.toISOString().slice(0, 16));
+
         $('#consultationForm').on('submit', function(e) {
             e.preventDefault();
             

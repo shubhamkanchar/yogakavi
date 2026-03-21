@@ -77,6 +77,7 @@ Route::name('admin.')->middleware('auth')->group(function () {
         Route::resource('gallery', \App\Http\Controllers\Admin\GalleryController::class);
         Route::post('/gallery/{gallery}/toggle', [\App\Http\Controllers\Admin\GalleryController::class, 'toggleStatus'])->name('gallery.toggle');
         Route::get('/diet-consultations', [\App\Http\Controllers\Admin\DietConsultationController::class, 'index'])->name('diet-consultations.index');
+        Route::post('/diet-consultations/{consultation}/toggle-contacted', [\App\Http\Controllers\Admin\DietConsultationController::class, 'toggleContacted'])->name('diet-consultations.toggle-contacted');
     });
 });
 

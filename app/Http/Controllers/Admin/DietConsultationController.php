@@ -12,4 +12,10 @@ class DietConsultationController extends Controller
         $consultations = DietConsultation::latest()->paginate(15);
         return view('admin.diet_consultations.index', compact('consultations'));
     }
+
+    public function toggleContacted(DietConsultation $consultation)
+    {
+        $consultation->update(['is_contacted' => !$consultation->is_contacted]);
+        return back()->with('success', 'Contacted status updated successfully.');
+    }
 }

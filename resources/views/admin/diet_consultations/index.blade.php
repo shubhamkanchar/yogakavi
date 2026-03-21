@@ -18,6 +18,7 @@
                                 <th>Call Back Time</th>
                                 <th>Payment ID</th>
                                 <th>Status</th>
+                                <th>Contacted</th>
                                 <th>Date Submitted</th>
                             </tr>
                         </thead>
@@ -37,6 +38,14 @@
                                         @else
                                             <span class="badge bg-warning text-dark">{{ ucfirst($consultation->status) }}</span>
                                         @endif
+                                    </td>
+                                    <td>
+                                        <form action="{{ route('admin.diet-consultations.toggle-contacted', $consultation->id) }}" method="POST">
+                                            @csrf
+                                            <div class="form-check form-switch d-flex align-items-center mb-0">
+                                                <input class="form-check-input" type="checkbox" role="switch" style="cursor: pointer;" onchange="this.form.submit()" {{ $consultation->is_contacted ? 'checked' : '' }}>
+                                            </div>
+                                        </form>
                                     </td>
                                     <td>{{ $consultation->created_at->format('d M Y, h:i A') }}</td>
                                 </tr>

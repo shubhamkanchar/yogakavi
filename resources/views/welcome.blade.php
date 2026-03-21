@@ -204,14 +204,6 @@
 @endsection
 
 @section('content')
-    <!-- Alerts -->
-    @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show position-fixed top-0 end-0 m-4" style="z-index: 1050;" role="alert">
-            {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
-
     <!-- 1. HERO SECTION -->
     <header id="home" class="hero-section d-flex align-items-center text-center">
         <!-- Background Carousel -->
