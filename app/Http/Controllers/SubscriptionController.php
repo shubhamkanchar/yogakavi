@@ -108,6 +108,11 @@ class SubscriptionController extends Controller
             'receipt' => (string) Str::uuid(),
             'amount' => $amount, // paise
             'currency' => 'INR',
+            'notes' => [
+                'type' => 'subscription',
+                'user_id' => auth()->id(),
+                'plan_id' => $plan->id,
+            ]
         ]);
 
         return response()->json([

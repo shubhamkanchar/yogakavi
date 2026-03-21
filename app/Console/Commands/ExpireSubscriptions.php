@@ -65,5 +65,6 @@ class ExpireSubscriptions extends Command
         }
 
         $this->info('Expiration check complete.');
+        Log::info('Expiration check complete.');
     }
 }

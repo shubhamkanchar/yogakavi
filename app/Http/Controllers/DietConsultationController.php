@@ -38,6 +38,10 @@ class DietConsultationController extends Controller
             'receipt' => (string) $consultation->id,
             'amount' => $amount,
             'currency' => 'INR',
+            'notes' => [
+                'type' => 'diet_consultation',
+                'consultation_id' => $consultation->id,
+            ]
         ]);
 
         $consultation->update(['razorpay_order_id' => $order->id]);
