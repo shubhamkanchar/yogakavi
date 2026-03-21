@@ -12,6 +12,7 @@ use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WebhookController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\DietConsultationController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/contact-us', [ContactController::class, 'store'])->name('contact.store');
@@ -24,6 +25,11 @@ Route::get('/refund-policy', [LandingController::class, 'refundPolicy'])->name('
 Route::get('/', [LandingController::class, 'index'])->name('welcome');
 Route::get('/yoga', [UserController::class, 'getYoga'])->name('form.yoga');
 Route::get('/diet', [UserController::class, 'getDiet'])->name('form.diet');
+
+Route::get('/diet-consultation', [DietConsultationController::class, 'index'])->name('diet_consultation.index');
+Route::post('/diet-consultation/order', [DietConsultationController::class, 'createOrder'])->name('diet_consultation.order');
+Route::post('/diet-consultation/verify', [DietConsultationController::class, 'verifyPayment'])->name('diet_consultation.verify');
+
 Route::post('/yoga-lead', [UserController::class, 'yogaLead'])->name('yoga.lead');
 Route::post('/diet-lead', [UserController::class, 'dietLead'])->name('diet.lead');
 Route::post('/razorpay/webhook', [WebhookController::class, 'handle']);
@@ -70,6 +76,7 @@ Route::name('admin.')->middleware('auth')->group(function () {
         Route::resource('blogs', \App\Http\Controllers\Admin\BlogController::class);
         Route::resource('gallery', \App\Http\Controllers\Admin\GalleryController::class);
         Route::post('/gallery/{gallery}/toggle', [\App\Http\Controllers\Admin\GalleryController::class, 'toggleStatus'])->name('gallery.toggle');
+        Route::get('/diet-consultations', [\App\Http\Controllers\Admin\DietConsultationController::class, 'index'])->name('diet-consultations.index');
     });
 });
 

@@ -35,8 +35,12 @@
                   <li class="nav-item">
                     <a href="{{ route('gallery.index') }}" class="nav-link fw-bold px-3 @if(request()->routeIs('gallery.index')) active @endif">Gallery</a>
                 </li>
-                 <li class="nav-item">
+                <li class="nav-item">
                     <a href="{{ route('welcome') }}#contact" class="nav-link fw-bold px-3">Contact</a>
+                </li>
+
+                <li class="nav-item ms-lg-3 d-flex align-items-center">
+                    <a href="{{ route('diet_consultation.index') }}" class="btn btn-success btn-sm rounded-pill px-4 py-2 fw-bold shadow-sm">Book Consultation</a>
                 </li>
 
                 {{-- Guest Links --}}

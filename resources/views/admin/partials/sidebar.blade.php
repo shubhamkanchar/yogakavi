@@ -10,6 +10,7 @@
     <a href="{{route('admin.live_classes.index')}}" class="@if(request()->routeIs('admin.live_classes.*')) active @endif"><i class="bi bi-camera-video"></i> <span class="text">Live Classes</span></a>
     <a href="{{route('admin.subscriptions.index')}}" class="@if(request()->routeIs('admin.subscriptions.*')) active @endif"><i class="bi bi-credit-card"></i> <span class="text">Subscriptions</span></a>
     <a href="{{route('admin.gallery.index')}}" class="@if(request()->routeIs('admin.gallery.*')) active @endif"><i class="bi bi-images"></i> <span class="text">Gallery</span></a>
+    <a href="{{route('admin.diet-consultations.index')}}" class="@if(request()->routeIs('admin.diet-consultations.*')) active @endif"><i class="bi bi-calendar2-check"></i> <span class="text">Consultations</span></a>
     @else
     <a href="{{route('admin.users.profile', ['uuid' => Auth::user()->uuid])}}" class="@if(request()->routeIs('admin.users.profile')) active @endif"><i class="bi bi-person"></i> <span class="text">Profile</span></a>
     <a href="{{route('form.yoga')}}" class="@if(request()->routeIs('form.yoga')) active @endif"><i class="bi bi-person-walking"></i> <span class="text">Yoga Form</span></a>

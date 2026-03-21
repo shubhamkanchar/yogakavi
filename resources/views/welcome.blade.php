@@ -252,9 +252,12 @@
                 Join <strong>Yogakavi</strong> for personalized diet plans and energizing yoga sessions designed 
                 specifically for your lifestyle and wellness goals.
             </p>
-            <div class="d-md-flex justify-content-center gap-3">
+            <div class="d-md-flex justify-content-center flex-wrap gap-2">
                 <a href="#plans" class="btn btn-gradient-primary btn-lg rounded-pill px-5 py-3 fw-bold shadow text-white m-2">
                     Get Started <i class="bi bi-arrow-right ms-2"></i>
+                </a>
+                <a href="{{ route('diet_consultation.index') }}" class="btn btn-success btn-lg rounded-pill px-4 py-3 fw-bold shadow m-2">
+                    Book Consultation <i class="bi bi-calendar2-check ms-2"></i>
                 </a>
                 <a href="#contact" class="btn btn-white btn-lg rounded-pill px-5 py-3 fw-bold shadow-sm m-2" style="background:white; color:#2c3e50;">
                     Contact Us <i class="bi bi-telephone ms-2"></i>
@@ -409,6 +412,11 @@
                             </div>
                         </div>
 
+                        <div class="mt-4">
+                            <a href="{{ route('diet_consultation.index') }}" class="btn btn-outline-success rounded-pill px-4 py-2 fw-bold shadow-sm mb-3">
+                                Get Diet Consultation - ₹100
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
