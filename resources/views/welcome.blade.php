@@ -356,7 +356,7 @@
             <div class="row align-items-center flex-lg-row-reverse">
                 <div class="col-lg-6 mb-4 mb-lg-0 position-relative text-center" data-aos="fade-left">
                      <!-- Decorative Blob -->
-                    <div class="position-absolute bg-success rounded-circle opacity-10" style="width: 300px; height: 300px; bottom: -20px; right: -20px; z-index: 0;"></div>
+                    <div class="position-absolute bg-success rounded-circle opacity-10" style="width: 300px; height: 300px; bottom: -30px; right: 0px; z-index: 0;"></div>
                     <img src="{{ asset('image/diet.png') }}" class="img-fluid position-relative rounded-4 shadow-lg" style="z-index: 1;" alt="Diet Illustration">
                 </div>
                 <div class="col-lg-6" data-aos="fade-right">
@@ -455,8 +455,8 @@
                                     
                                     <p class="fs-4 fst-italic text-dark mb-4" style="line-height: 1.6;">I have been a student of Vaishali ma'am since her very first offline session, and I can confidently say her dedication is unmatched. Even though she has transitioned to online classes, the energy and connection remain just as strong. With her expert yoga training and customized diet plan, I lost 10 kg and felt a total transformation. After a 1 year break for personal reasons, I recently rejoined, and it felt like I never left. What sets her apart is how she balances consistency and hard work with her own flexible approach to teaching.she meets every student where they are. She is a rare, kind hearted soul who teaches out of pure passion and joy rather than for profit. Her fees are incredibly low, but the value, health, and discipline she brings to your life are priceless. If you are looking for a teacher who is truly invested in your journey, you have found her..✨❤️</p>
                                     
-                                    <!-- <h5 class="fw-bold mb-1 text-primary">Neha Sharma</h5>
-                                    <span class="d-block text-muted small mb-3">Diet Plan Client</span> -->
+                                    <h5 class="fw-bold mb-1 text-primary">Trupti Hadge</h5>
+                                    <!-- <span class="d-block text-muted small mb-3">Diet Plan Client</span> -->
                                     
                                     <div class="text-warning">
                                         <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
@@ -490,8 +490,8 @@
                                     Thank you for being extremely professional and yet so kind and friendly. 
                                     I am fitting into my old clothes i feel healthy:) Thank you so much!:)</p>
                                     
-                                    <!-- <h5 class="fw-bold mb-1 text-success">Raj Verma</h5>
-                                    <span class="d-block text-muted small mb-3">Yoga Student</span> -->
+                                    <h5 class="fw-bold mb-1 text-primary">Suvrnalata</h5>
+                                    <!-- <span class="d-block text-muted small mb-3">Yoga Student</span> -->
                                     
                                     <div class="text-warning">
                                         <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
@@ -515,8 +515,8 @@
                                     
                                     <p class="fs-4 fst-italic text-dark mb-4" style="line-height: 1.6;">"I lost 10kg in just 2nd half months verry customized diet verry energetic feel my body nd mam nature is verry friendly☺️"</p>
                                     
-                                    <!-- <h5 class="fw-bold mb-1 text-warning">Priya Singh</h5>
-                                    <span class="d-block text-muted small mb-3">Combo Plan Client</span> -->
+                                    <h5 class="fw-bold mb-1 text-primary">Jay Thumar</h5>
+                                    <!-- <span class="d-block text-muted small mb-3">Combo Plan Client</span> -->
                                     
                                     <div class="text-warning">
                                         <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
@@ -540,8 +540,8 @@
                                     
                                     <p class="fs-4 fst-italic text-dark mb-4" style="line-height: 1.6;">"I am doing yoga with Vaishali Didi from last 1 years and she is very good. She explains every yoga step clearly and takes care of all the asanas properly. Every session is very nice and well planned. Since I joined her classes, I have seen many positive changes in my lifestyle. My weight has reduced and I feel more fit and healthy. I am very happy with her yoga sessions and I am truly thankful to her and highly recommend her yoga classes to everyone👍"</p>
                                     
-                                    <!-- <h5 class="fw-bold mb-1 text-warning">Priya Singh</h5>
-                                    <span class="d-block text-muted small mb-3">Combo Plan Client</span> -->
+                                    <h5 class="fw-bold mb-1 text-primary">Priyanka Salave</h5>
+                                    <!-- <span class="d-block text-muted small mb-3">Combo Plan Client</span> -->
                                     
                                     <div class="text-warning">
                                         <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
@@ -565,8 +565,8 @@
                                     
                                     <p class="fs-4 fst-italic text-dark mb-4" style="line-height: 1.6;">"Dear Vaishali Ma'am, I took diet plan from you on  19th July 2025 and started my diet as per plan given by you. And the miracle happened I lost my weight by 10Kg within 3 months,now 5 months completed but I'm still having the same diet as per guidance provided by you.Hence before I tried many diet plans but they didn't work and I was continuously gaining the weight. But your diet plan give me confidence that yes I can also loose my weight with simple diet. Thank you so much for your valuable support and guidance. You are really great."</p>
                                     
-                                    <!-- <h5 class="fw-bold mb-1 text-warning">Priya Singh</h5>
-                                    <span class="d-block text-muted small mb-3">Combo Plan Client</span> -->
+                                    <h5 class="fw-bold mb-1 text-primary">Shradha Bhure</h5>
+                                    <!-- <span class="d-block text-muted small mb-3">Combo Plan Client</span> -->
                                     
                                     <div class="text-warning">
                                         <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
@@ -590,8 +590,8 @@
                                     
                                     <p class="fs-4 fst-italic text-dark mb-4" style="line-height: 1.6;">"तुमचे योगकेंद्र आज मला नेमके हवे तसेच आहे ; आता मला शारीरिकरित्या ताजेतवाने आणि मानसिकरित्या शांत वाटत आहे.मला आधी जो कमरेचा त्रास व खाली बसल्यावर पायाला मुंग्या येत असत त्या बंद  झाल्या व सतत असणारी मानदुखीही कमी झाली..तुमच्या योगकेंद्रामुळे माझ्या दैनंदिन जीवनावरही चांगला परिणाम झाला आहे.....🙏🏻🙏🏻🙏🏻👍🏻"</p>
                                     
-                                    <!-- <h5 class="fw-bold mb-1 text-warning">Priya Singh</h5>
-                                    <span class="d-block text-muted small mb-3">Combo Plan Client</span> -->
+                                    <h5 class="fw-bold mb-1 text-primary">Hema Kawale</h5>
+                                    <!-- <span class="d-block text-muted small mb-3">Combo Plan Client</span> -->
                                     
                                     <div class="text-warning">
                                         <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
@@ -615,8 +615,8 @@
                                     
                                     <p class="fs-4 fst-italic text-dark mb-4" style="line-height: 1.6;">"I took diet plan from Vaishali and also join yoga batches from last year.... And the results are awsome...I loose 5 kg in one month when I started taking diet plan from Vaishali madam and feel very energetic and fit with regular yoga practice with Vaishali madam.... Talking about diet mam always give  tasty and easy available options which are actually super foods from our kitchen..... Thank you dear Vaishali madam and keep giving us healthy idea's of food and yoga🙏🏻🙏🏻"</p>
                                     
-                                    <!-- <h5 class="fw-bold mb-1 text-warning">Priya Singh</h5>
-                                    <span class="d-block text-muted small mb-3">Combo Plan Client</span> -->
+                                    <h5 class="fw-bold mb-1 text-primary">Shilpa Sonar</h5>
+                                    <!-- <span class="d-block text-muted small mb-3">Combo Plan Client</span> -->
                                     
                                     <div class="text-warning">
                                         <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
@@ -640,8 +640,8 @@
                                     
                                     <p class="fs-4 fst-italic text-dark mb-4" style="line-height: 1.6;">"Training with my yoga coach has brought a real change in my lifestyle. She motivates me to stay healthy not just through regular full-body exercises, but also by guiding me on better food habits. Over time, I’ve seen a clear difference in my fitness and energy levels, and along with that, a growing sense of confidence in myself. Her approach is simple, practical, and easy to follow, which has helped me stay consistent and committed. I’m really grateful for her guidance and the positive push she gives every single session."</p>
                                     
-                                    <!-- <h5 class="fw-bold mb-1 text-warning">Priya Singh</h5>
-                                    <span class="d-block text-muted small mb-3">Combo Plan Client</span> -->
+                                    <h5 class="fw-bold mb-1 text-primary">Sanchita Weljale</h5>
+                                    <!-- <span class="d-block text-muted small mb-3">Combo Plan Client</span> -->
                                     
                                     <div class="text-warning">
                                         <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
@@ -665,8 +665,8 @@
                                     
                                     <p class="fs-4 fst-italic text-dark mb-4" style="line-height: 1.6;">"I took a diet plan from vaishali mam, and the results were honestly amazing. I managed to lose around 5–6 kg in a very healthy and comfortable way. vaishali mam provided different diet plans every week, which really helped me stay motivated and consistent throughout the journey. The diet plans were simple, practical, and easy to follow—no extreme restrictions at all. I felt lighter, more energetic, and more confident. vaishali mam is very supportive, knowledgeable, and genuinely cares about her clients’ progress and results. I am extremely happy with my transformation and truly grateful for her guidance. I would highly recommend vaishali mam to anyone looking for effective and healthy weight-loss results 🌸✨"</p>
                                     
-                                    <!-- <h5 class="fw-bold mb-1 text-warning">Priya Singh</h5>
-                                    <span class="d-block text-muted small mb-3">Combo Plan Client</span> -->
+                                    <h5 class="fw-bold mb-1 text-primary">Reshma Walecha</h5>
+                                    <!-- <span class="d-block text-muted small mb-3">Combo Plan Client</span> -->
                                     
                                     <div class="text-warning">
                                         <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
