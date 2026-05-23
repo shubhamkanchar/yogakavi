@@ -80,7 +80,7 @@
                     key: "{{ config('services.razorpay.key') }}",
                     amount: order.amount,
                     currency: "INR",
-                    name: "Yogakavi Wellness",
+                    name: "{{ config('app.name', 'Yogkaavi') }} Wellness",
                     description: "Payment for " + planName,
                     order_id: order.id,
                     handler: function(response) {

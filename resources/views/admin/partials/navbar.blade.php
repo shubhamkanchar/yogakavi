@@ -7,7 +7,7 @@
             <i class="bi bi-list fs-4"></i>
         </button>
 
-        <a class="navbar-brand fw-bold" href="{{ route('welcome') }}">{{ env('APP_NAME') }}</a>
+        <a class="navbar-brand fw-bold" href="{{ route('welcome') }}">{{ config('app.name', 'Yogkaavi') }}</a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
             <span class="navbar-toggler-icon"></span>

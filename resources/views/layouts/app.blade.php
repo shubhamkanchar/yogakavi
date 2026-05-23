@@ -3,12 +3,13 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="Free Web tutorials">
-    <meta name="keywords" content="HTML, CSS, JavaScript">
-    <meta name="author" content="John Doe">
+    <meta name="description" content="{{ config('app.name', 'Yogkaavi') }} - Transform Your Body, Calm Your Mind. Join us for personalized diet plans and energizing yoga sessions designed specifically for your lifestyle.">
+    <meta name="keywords" content="yoga, diet, fitness, health, wellness, meditation, nutrition, diet consultation">
+    <meta name="author" content="{{ config('app.name', 'Yogkaavi') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    @yield('meta')
+    <title>{{ config('app.name', 'Yogkaavi') }}</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
     @yield('style')

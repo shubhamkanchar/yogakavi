@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm py-3">
     <div class="container">
         <a class="navbar-brand fw-bold fs-4" href="{{ route('welcome') }}" style="color: #2c3e50; letter-spacing: -0.5px;">
-            <i class="bi bi-heart-pulse-fill text-primary me-2"></i>{{ config('app.name', 'Yogakavi') }}
+            <i class="bi bi-heart-pulse-fill text-primary me-2"></i>{{ config('app.name', 'Yogkaavi') }}
         </a>
 
         <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">

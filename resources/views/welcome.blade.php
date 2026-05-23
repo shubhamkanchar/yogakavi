@@ -1,5 +1,25 @@
 @extends('layouts.app')
 
+@section('meta')
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url('/') }}">
+    <meta property="og:title" content="{{ config('app.name', 'Yogkaavi') }} - Transform Your Body, Calm Your Mind">
+    <meta property="og:description" content="Join {{ config('app.name', 'Yogkaavi') }} for personalized diet plans and energizing yoga sessions designed specifically for your lifestyle and wellness goals.">
+    <meta property="og:image" content="{{ asset('images/og-share.png') }}">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="{{ config('app.name', 'Yogkaavi') }}">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{ url('/') }}">
+    <meta property="twitter:title" content="{{ config('app.name', 'Yogkaavi') }} - Transform Your Body, Calm Your Mind">
+    <meta property="twitter:description" content="Join {{ config('app.name', 'Yogkaavi') }} for personalized diet plans and energizing yoga sessions designed specifically for your lifestyle and wellness goals.">
+    <meta property="twitter:image" content="{{ asset('images/og-share.png') }}">
+@endsection
+
 @section('style')
     <style>
         /* --- Hero Section --- */
@@ -241,7 +261,7 @@
                 Transform Your Body,<br> <span style="color: #667eea;">Calm Your Mind</span>
             </h1>
             <p class="hero-subtitle mb-5">
-                Join <strong>Yogakavi</strong> for personalized diet plans and energizing yoga sessions designed 
+                Join <strong>{{ config('app.name', 'Yogkaavi') }}</strong> for personalized diet plans and energizing yoga sessions designed 
                 specifically for your lifestyle and wellness goals.
             </p>
             <div class="d-md-flex justify-content-center flex-wrap gap-2">

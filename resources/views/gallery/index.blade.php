@@ -5,7 +5,7 @@
         <div class="text-center mb-5">
             <h1 class="fw-bold display-4 mb-3">Our Work & <span class="text-primary">Gallery</span></h1>
             <p class="text-muted lead mx-auto" style="max-width: 700px;">
-                Explore moments from our yoga sessions, diet transformations, and the vibrant life at YogaKavi.
+                Explore moments from our yoga sessions, diet transformations, and the vibrant life at {{ config('app.name', 'Yogkaavi') }}.
             </p>
         </div>
 

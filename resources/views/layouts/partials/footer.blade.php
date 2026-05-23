@@ -5,7 +5,7 @@
             <!-- 1. Brand & Info -->
             <div class="col-lg-4 col-md-6">
                 <h4 class="fw-bold text-white mb-3">
-                    <i class="bi bi-heart-pulse-fill text-primary me-2"></i>{{ config('app.name', 'Yogakavi') }}
+                    <i class="bi bi-heart-pulse-fill text-primary me-2"></i>{{ config('app.name', 'Yogkaavi') }}
                 </h4>
                 <p class="text-white-50 small pe-lg-5">
                     Your partner in holistic wellness. We blend ancient yoga traditions with modern nutritional science to help you achieve a balanced, healthy life.
@@ -65,7 +65,7 @@
 
         <div class="row align-items-center">
             <div class="col-md-6 text-center text-md-start">
-                <p class="mb-0 text-white-50 small">© {{ date('Y') }} {{ config('app.name', 'Yogakavi') }}. All Rights Reserved.</p>
+                <p class="mb-0 text-white-50 small">© {{ date('Y') }} {{ config('app.name', 'Yogkaavi') }}. All Rights Reserved.</p>
             </div>
             <div class="col-md-6 text-center text-md-end mt-3 mt-md-0">
                 <a href="{{ route('privacy-policy') }}" class="text-white-50 small text-decoration-none me-3 hover-text-white">Privacy Policy</a>
