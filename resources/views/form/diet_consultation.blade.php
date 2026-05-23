@@ -83,7 +83,7 @@
                 },
                 success: function(order) {
                     var options = {
-                        key: "{{ env('RAZORPAY_KEY') }}",
+                        key: "{{ config('services.razorpay.key') }}",
                         amount: order.amount,
                         currency: "INR",
                         name: "Yogakavi Wellness",

@@ -100,7 +100,7 @@ class SubscriptionController extends Controller
 
     public function createOrder(Plan $plan)
     {
-        $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
+        $api = new Api(config('services.razorpay.key'), config('services.razorpay.secret'));
 
         $amount = ($plan->discounted_price ?: $plan->price) * 100;
 
@@ -123,7 +123,7 @@ class SubscriptionController extends Controller
 
     public function verifyPayment(Request $request, Plan $plan)
     {
-        $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
+        $api = new Api(config('services.razorpay.key'), config('services.razorpay.secret'));
 
         try {
             $api->utility->verifyPaymentSignature([

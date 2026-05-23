@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Subscription;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class ExpireSubscriptions extends Command
 {

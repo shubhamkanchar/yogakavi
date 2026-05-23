@@ -31,7 +31,7 @@ class DietConsultationController extends Controller
             'status' => 'pending',
         ]);
 
-        $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
+        $api = new Api(config('services.razorpay.key'), config('services.razorpay.secret'));
         $amount = 100 * 100; // 100 INR in paise
 
         $order = $api->order->create([
@@ -55,7 +55,7 @@ class DietConsultationController extends Controller
 
     public function verifyPayment(Request $request)
     {
-        $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
+        $api = new Api(config('services.razorpay.key'), config('services.razorpay.secret'));
 
         try {
             $api->utility->verifyPaymentSignature([

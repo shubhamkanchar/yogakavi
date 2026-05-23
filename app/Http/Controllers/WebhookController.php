@@ -14,7 +14,7 @@ class WebhookController extends Controller
     {
         try{
             $signature = $request->header('X-Razorpay-Signature');
-            $secret = env('RAZORPAY_SECRET'); // often same as API secret or Webhook secret
+            $secret = config('services.razorpay.webhook_secret');
 
             $expected = hash_hmac('sha256', $request->getContent(), $secret);
 
@@ -40,7 +40,7 @@ class WebhookController extends Controller
                         if ($userId && $planId) {
                             $plan = Plan::find($planId);
                             if ($plan) {
-                                $subscription = Subscription::where('razorpay_order_id', $orderId)->first();
+                                $subscription = $orderId ? Subscription::where('razorpay_order_id', $orderId)->first() : null;
                                 $amount = $plan->discounted_price ?: $plan->price;
 
                                 if ($subscription && in_array($subscription->status, ['trial', 'pending_payment'])) {
@@ -82,7 +82,7 @@ class WebhookController extends Controller
             }
 
             return response()->json(['status' => 'ok']);
-        }catch(Exception $e){
+        }catch(\Exception $e){
             Log::error('Razorpay webhook error: ' . $e->getMessage());
             return response()->json(['error' => $e->getMessage()], 403);
         }
