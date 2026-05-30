@@ -57,6 +57,46 @@
                                     </div>
                                 </div>
 
+                                <div class="row">
+                                    <!-- Gender -->
+                                    <div class="mb-3 col-md-6">
+                                        <label for="gender" class="form-label fw-semibold">Gender <span class="text-danger">*</span></label>
+                                        <select id="gender" name="gender" class="form-select bg-light border py-2" required>
+                                            <option value="">Select Gender</option>
+                                            <option value="male" {{ old('gender', optional($user)->gender) === 'male' ? 'selected' : '' }}>Male</option>
+                                            <option value="female" {{ old('gender', optional($user)->gender) === 'female' ? 'selected' : '' }}>Female</option>
+                                            <option value="other" {{ old('gender', optional($user)->gender) === 'other' ? 'selected' : '' }}>Other</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Activity Level -->
+                                    <div class="mb-3 col-md-6">
+                                        <label for="activity_level" class="form-label fw-semibold">Activity Level <span class="text-danger">*</span></label>
+                                        <select id="activity_level" name="activity_level" class="form-select bg-light border py-2" required>
+                                            <option value="">Select Activity Level</option>
+                                            <option value="sedentary" {{ old('activity_level', optional($user)->activity_level) === 'sedentary' ? 'selected' : '' }}>Sedentary (little/no exercise)</option>
+                                            <option value="lightly_active" {{ old('activity_level', optional($user)->activity_level) === 'lightly_active' ? 'selected' : '' }}>Lightly active (light exercise 1-3 days/wk)</option>
+                                            <option value="moderately_active" {{ old('activity_level', optional($user)->activity_level) === 'moderately_active' ? 'selected' : '' }}>Moderately active (moderate exercise 3-5 days/wk)</option>
+                                            <option value="very_active" {{ old('activity_level', optional($user)->activity_level) === 'very_active' ? 'selected' : '' }}>Very active (hard exercise 6-7 days/wk)</option>
+                                            <option value="extra_active" {{ old('activity_level', optional($user)->activity_level) === 'extra_active' ? 'selected' : '' }}>Extra active (very hard exercise & physical job)</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <!-- Residence -->
+                                    <div class="mb-3 col-md-6">
+                                        <label for="residence" class="form-label fw-semibold">Residence (optional)</label>
+                                        <input id="residence" name="residence" type="text" class="form-control bg-light border py-2" value="{{ old('residence', optional($user)->residence) }}" placeholder="e.g. Metropolitan city">
+                                    </div>
+
+                                    <!-- Family Type -->
+                                    <div class="mb-3 col-md-6">
+                                        <label for="family_type" class="form-label fw-semibold">Family Type (optional)</label>
+                                        <input id="family_type" name="family_type" type="text" class="form-control bg-light border py-2" value="{{ old('family_type', optional($user)->family_type) }}" placeholder="e.g. Lives with wife">
+                                    </div>
+                                </div>
+
                                 <div class="mb-3">
                                     <label for="phone" class="form-label fw-semibold">Phone (optional)</label>
                                     <input id="phone" name="phone" type="tel" class="form-control bg-light border py-2" value="{{ old('phone', optional($user)->phone) }}" placeholder="10-digit phone number">

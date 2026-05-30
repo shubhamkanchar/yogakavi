@@ -159,6 +159,8 @@ class UserController extends Controller
                 'age' => 'required',
                 'height' => 'required',
                 'weight' => 'required',
+                'gender' => 'required|in:male,female,other',
+                'activity_level' => 'required|in:sedentary,lightly_active,moderately_active,very_active,extra_active',
             ]);
 
             // Update User Profile
@@ -169,6 +171,10 @@ class UserController extends Controller
                 'height' => $request->height,
                 'weight' => $request->weight,
                 'phone' => $request->phone,
+                'gender' => $request->gender,
+                'activity_level' => $request->activity_level,
+                'residence' => $request->residence,
+                'family_type' => $request->family_type,
             ]);
 
             // Create or Update Yoga Lead for authenticated user
@@ -198,6 +204,8 @@ class UserController extends Controller
                 'age' => 'required',
                 'height' => 'required',
                 'weight' => 'required',
+                'gender' => 'required|in:male,female,other',
+                'activity_level' => 'required|in:sedentary,lightly_active,moderately_active,very_active,extra_active',
             ]);
 
             // Create a new user (assumes you have a User model with the appropriate fields)
@@ -210,6 +218,10 @@ class UserController extends Controller
                 'height' => $request->height,
                 'weight' => $request->weight,
                 'phone' => $request->phone,
+                'gender' => $request->gender,
+                'activity_level' => $request->activity_level,
+                'residence' => $request->residence,
+                'family_type' => $request->family_type,
             ]);
 
             // Create the Yoga Lead for the new user
@@ -251,6 +263,8 @@ public function dietLead(Request $request)
                 'age' => 'required',
                 'height' => 'required',
                 'weight' => 'required',
+                'gender' => 'required|in:male,female,other',
+                'activity_level' => 'required|in:sedentary,lightly_active,moderately_active,very_active,extra_active',
             ]);
 
             // Update User Profile
@@ -261,6 +275,10 @@ public function dietLead(Request $request)
                 'height' => $request->height,
                 'weight' => $request->weight,
                 'phone' => $request->phone,
+                'gender' => $request->gender,
+                'activity_level' => $request->activity_level,
+                'residence' => $request->residence,
+                'family_type' => $request->family_type,
             ]);
 
             // Create or Update Diet Lead for authenticated user
@@ -294,6 +312,8 @@ public function dietLead(Request $request)
                 'age' => 'required',
                 'height' => 'required',
                 'weight' => 'required',
+                'gender' => 'required|in:male,female,other',
+                'activity_level' => 'required|in:sedentary,lightly_active,moderately_active,very_active,extra_active',
             ]);
 
             // Create a new user (assumes you have a User model with the appropriate fields)
@@ -306,6 +326,10 @@ public function dietLead(Request $request)
                 'height' => $request->height,
                 'weight' => $request->weight,
                 'phone' => $request->phone,
+                'gender' => $request->gender,
+                'activity_level' => $request->activity_level,
+                'residence' => $request->residence,
+                'family_type' => $request->family_type,
             ]);
 
             // Create the Diet Lead for the new user

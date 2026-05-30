@@ -24,4 +24,9 @@ class DietPlan extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function exchanges()
+    {
+        return $this->hasMany(DietPlanExchange::class);
+    }
 }

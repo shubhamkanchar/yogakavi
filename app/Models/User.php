@@ -30,6 +30,10 @@ class User extends Authenticatable
         'email',
         'uuid',
         'password',
+        'gender',
+        'activity_level',
+        'residence',
+        'family_type',
     ];
 
     /**
