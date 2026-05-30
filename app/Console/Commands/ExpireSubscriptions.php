@@ -37,15 +37,11 @@ class ExpireSubscriptions extends Command
 
         foreach ($expiredActive as $sub) {
             $sub->update(['status' => 'expired']);
-            
+
             $user = $sub->user;
             if ($user && $sub->plan) {
                 $type = $sub->plan->type;
-                $currentSubs = $user->subscription ?? [];
-                $currentSubs = array_values(array_diff($currentSubs, [$type]));
-                $user->subscription = $currentSubs;
-                $user->save();
-                
+
                 $this->info("Expired active subscription {$sub->id} for user {$user->id} (Plan: {$type})");
             }
         }
@@ -59,10 +55,6 @@ class ExpireSubscriptions extends Command
         foreach ($expiredTrials as $trial) {
             $trial->update(['status' => 'pending_payment']);
             $this->info("Trial ended for subscription {$trial->id} - moved to pending_payment.");
-            
-            // Note: We don't remove from user->subscription array here, 
-            // because they still "have" the plan, just need to pay for it.
-            // Middleware will block them.
         }
 
         $this->info('Expiration check complete.');

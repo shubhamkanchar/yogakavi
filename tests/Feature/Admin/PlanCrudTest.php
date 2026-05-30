@@ -111,6 +111,6 @@ class PlanCrudTest extends TestCase
         $user = \App\Models\User::factory()->create(['role' => 'user']);
         
         $response = $this->actingAs($user)->get(route('admin.plans.index'));
-        $response->assertStatus(302); // Redirect back or to dashboard
+        $response->assertStatus(403);
     }
 }

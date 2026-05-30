@@ -69,8 +69,14 @@ class DashboardController extends Controller
             ->with('user')
             ->get();
 
-        // Diet Plans Expiring Soon (Ends in next 2 days)
-        $expiringDietPlans = \App\Models\DietPlan::whereBetween('end_date', [now()->toDateString(), now()->addDays(2)->toDateString()])
+        // Latest diet plan per user, due now or within the next 2 days.
+        $latestDietPlanIds = \App\Models\DietPlan::selectRaw('MAX(id)')
+            ->groupBy('user_id');
+
+        $expiringDietPlans = \App\Models\DietPlan::whereIn('id', $latestDietPlanIds)
+            ->whereNotNull('end_date')
+            ->whereDate('end_date', '<=', now()->addDays(2)->toDateString())
+            ->orderBy('end_date')
             ->with('user')
             ->get();
 

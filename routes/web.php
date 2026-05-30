@@ -58,9 +58,12 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::name('admin.')->middleware('auth')->group(function () {
-    Route::get('/users', [AdminUserController::class, 'index'])->name('users.index');
     Route::get('/users/{uuid}', [AdminUserController::class, 'userProfile'])->name('users.profile');
-    Route::resource('plans', PlanController::class);
+});
+
+Route::name('admin.')->middleware(['auth', 'admin'])->group(function () {
+    Route::get('/users', [AdminUserController::class, 'index'])->name('users.index');
+    Route::resource('plans', PlanController::class)->except(['show']);
     Route::get('/diet/create/{uuid}', [DietController::class, 'create'])->name('diet.create');
     Route::post('/diet/store', [DietController::class, 'store'])->name('diet.store');
 
@@ -68,13 +71,13 @@ Route::name('admin.')->middleware('auth')->group(function () {
     Route::post('/broadcast/preview', [\App\Http\Controllers\Admin\BroadcastController::class, 'preview'])->name('broadcast.preview');
     Route::post('/broadcast/send-email', [\App\Http\Controllers\Admin\BroadcastController::class, 'sendEmails'])->name('broadcast.send_email');
 
-    Route::resource('subscriptions', AdminSubscriptionController::class);
-    Route::resource('live_classes', LiveClassController::class);
+    Route::resource('subscriptions', AdminSubscriptionController::class)->only(['index', 'edit', 'update']);
+    Route::resource('live_classes', LiveClassController::class)->except(['show']);
 
     Route::prefix('admin')->group(function () {
         Route::post('blogs/upload', [\App\Http\Controllers\Admin\BlogController::class, 'upload'])->name('blogs.upload');
-        Route::resource('blogs', \App\Http\Controllers\Admin\BlogController::class);
-        Route::resource('gallery', \App\Http\Controllers\Admin\GalleryController::class);
+        Route::resource('blogs', \App\Http\Controllers\Admin\BlogController::class)->except(['show']);
+        Route::resource('gallery', \App\Http\Controllers\Admin\GalleryController::class)->only(['index', 'create', 'store', 'destroy']);
         Route::post('/gallery/{gallery}/toggle', [\App\Http\Controllers\Admin\GalleryController::class, 'toggleStatus'])->name('gallery.toggle');
         Route::get('/diet-consultations', [\App\Http\Controllers\Admin\DietConsultationController::class, 'index'])->name('diet-consultations.index');
         Route::post('/diet-consultations/{consultation}/toggle-contacted', [\App\Http\Controllers\Admin\DietConsultationController::class, 'toggleContacted'])->name('diet-consultations.toggle-contacted');
@@ -84,4 +87,3 @@ Route::name('admin.')->middleware('auth')->group(function () {
 Route::get('/galleries', [\App\Http\Controllers\GalleryController::class, 'index'])->name('gallery.index');
 
 Auth::routes();
-

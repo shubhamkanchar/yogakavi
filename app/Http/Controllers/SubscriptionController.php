@@ -18,7 +18,7 @@ class SubscriptionController extends Controller
         
         // Ensure user is not an admin
         if ($user->isAdmin()) {
-            return redirect()->route('admin.dashboard')->with('error', 'Admins cannot purchase plans.');
+            return redirect()->route('dashboard')->with('error', 'Admins cannot purchase plans.');
         }
 
         // $activeSubscription = $user->activeSubscription;

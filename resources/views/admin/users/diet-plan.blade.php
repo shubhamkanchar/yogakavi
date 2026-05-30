@@ -79,7 +79,7 @@
                class="btn btn-light fw-semibold shadow-sm">
                 <i class="bi bi-file-earmark-pdf-fill text-success me-1"></i> Download PDF
             </a>
-            <a href="{{ route('admin.users.index') }}" class="btn btn-light fw-semibold shadow-sm">
+            <a href="{{ auth()->user()->isAdmin() ? route('admin.users.index') : route('dashboard') }}" class="btn btn-light fw-semibold shadow-sm">
                 <i class="bi bi-arrow-left me-1"></i> Back
             </a>
         </div>

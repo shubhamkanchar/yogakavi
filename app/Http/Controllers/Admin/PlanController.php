@@ -26,7 +26,7 @@ class PlanController extends Controller
             'name' => 'required|string|max:255',
             'type' => 'required|in:yoga,diet,combo,personal',
             'interval_days' => 'required|integer|min:1',
-            'trial_days' => 'required|integer|min:0',
+            'trial_days' => 'nullable|integer|min:0',
             'price' => 'required|numeric|min:0',
             'color' => 'required|string|size:7',
             'description' => 'nullable|string',
@@ -36,6 +36,7 @@ class PlanController extends Controller
         ]);
 
         $validated['is_active'] = $request->has('is_active');
+        $validated['trial_days'] = $validated['trial_days'] ?? 0;
 
         Plan::create($validated);
 
@@ -53,7 +54,7 @@ class PlanController extends Controller
             'name' => 'required|string|max:255',
             'type' => 'required|in:yoga,diet,combo,personal',
             'interval_days' => 'required|integer|min:1',
-            'trial_days' => 'required|integer|min:0',
+            'trial_days' => 'nullable|integer|min:0',
             'price' => 'required|numeric|min:0',
             'color' => 'required|string|size:7',
             'description' => 'nullable|string',
@@ -63,6 +64,7 @@ class PlanController extends Controller
         ]);
 
         $validated['is_active'] = $request->has('is_active');
+        $validated['trial_days'] = $validated['trial_days'] ?? 0;
 
         $plan->update($validated);
 

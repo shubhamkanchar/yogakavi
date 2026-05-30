@@ -48,6 +48,10 @@ class DietController extends Controller
     public function store(Request $request)
     {
         $userId = User::where('uuid', $request->uuid)->value('id');
+        if (!$userId) {
+            abort(404);
+        }
+
         $daysCount = count($request->days);
         $dietPlan = DietPlan::create([
             'user_id'   => $userId,
@@ -60,9 +64,9 @@ class DietController extends Controller
             $dinner    = $this->saveMenuItem($day['dinner'] ?? '', 'dinner');
 
             DietPlanDetail::create([
-                'user_id'      => $userId,
                 'diet_plan_id' => $dietPlan->id,
                 'day_number'   => $index + 1,
+                'weekday'      => $day['weekday'] ?? null,
                 'breakfast'    => $breakfast,
                 'breakfast_weight' => $day['breakfast_weight'] ?? null,
                 'lunch'        => $lunch,
@@ -131,6 +135,8 @@ class DietController extends Controller
     private function getDietPlanData($uuid)
     {
         $dietPlan = DietPlan::with(['user.dietLead', 'exchanges'])->where('uuid', $uuid)->firstOrFail();
+        $this->authorizeDietPlanAccess($dietPlan);
+
         $dietDetails = DietPlanDetail::where('diet_plan_id', $dietPlan->id)->get();
         $user = $dietPlan->user;
 
@@ -285,6 +291,15 @@ class DietController extends Controller
                 'TDEE' => $tdee ? $tdee . ' kcal/day'  : null,
             ]
         ];
+    }
+
+    private function authorizeDietPlanAccess(DietPlan $dietPlan): void
+    {
+        $user = auth()->user();
+
+        if (!$user || (!$user->isAdmin() && $dietPlan->user_id !== $user->id)) {
+            abort(403, 'Unauthorized access.');
+        }
     }
 
     private function parseHeightToCm($heightStr)
