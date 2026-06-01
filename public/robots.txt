@@ -1,2 +1,21 @@
 User-agent: *
-Disallow:
+Allow: /
+
+# Keep private and account-specific pages out of search results.
+Disallow: /admin/
+Disallow: /dashboard
+Disallow: /checkout/
+Disallow: /users/
+Disallow: /diet-plan/
+Disallow: /secure-image/
+
+# Keep authentication and password flows out of search results.
+Disallow: /login
+Disallow: /register
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /verify-email
+Disallow: /confirm-password
+
+# Avoid indexing generated or uploaded storage URLs.
+Disallow: /storage/

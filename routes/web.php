@@ -33,7 +33,9 @@ Route::post('/diet-consultation/verify', [DietConsultationController::class, 've
 Route::post('/yoga-lead', [UserController::class, 'yogaLead'])->name('yoga.lead');
 Route::post('/diet-lead', [UserController::class, 'dietLead'])->name('diet.lead');
 Route::post('/razorpay/webhook', [WebhookController::class, 'handle']);
-Route::get('/secure-image/{filename}', [LandingController::class, 'show'])->name('secure-image');
+Route::get('/secure-image/{filename}', [LandingController::class, 'show'])
+    ->where('filename', '[A-Za-z0-9._-]+')
+    ->name('secure-image');
 
 // Public Blog Routes
 Route::get('/all-blogs', [\App\Http\Controllers\BlogController::class, 'index'])->name('blogs.index');

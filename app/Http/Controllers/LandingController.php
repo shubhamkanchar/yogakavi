@@ -35,9 +35,10 @@ class LandingController extends Controller
         //     abort(403);
         // }
 
-        $path = storage_path('app/private_image/' . $filename);
+        $basePath = realpath(storage_path('app/private_image'));
+        $path = $basePath ? realpath($basePath . DIRECTORY_SEPARATOR . basename($filename)) : false;
 
-        if (!file_exists($path)) {
+        if (! $basePath || ! $path || ! str_starts_with($path, $basePath . DIRECTORY_SEPARATOR)) {
             abort(404);
         }
 

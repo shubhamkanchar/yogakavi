@@ -16,9 +16,15 @@ class WebhookController extends Controller
             $signature = $request->header('X-Razorpay-Signature');
             $secret = config('services.razorpay.webhook_secret');
 
+            if (! $signature || ! $secret) {
+                Log::warning('Razorpay webhook rejected because signature or secret is missing.');
+
+                return response()->json(['error' => 'Invalid signature'], 403);
+            }
+
             $expected = hash_hmac('sha256', $request->getContent(), $secret);
 
-            if ($signature !== $expected) {
+            if (! hash_equals($expected, $signature)) {
                 return response()->json(['error' => 'Invalid signature'], 403);
             }
 
@@ -84,7 +90,7 @@ class WebhookController extends Controller
             return response()->json(['status' => 'ok']);
         }catch(\Exception $e){
             Log::error('Razorpay webhook error: ' . $e->getMessage());
-            return response()->json(['error' => $e->getMessage()], 403);
+            return response()->json(['error' => 'Webhook processing failed'], 403);
         }
     }
 }
