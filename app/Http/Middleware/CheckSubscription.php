@@ -20,6 +20,9 @@ class CheckSubscription
         if ($user && $user->isUser()) {
             // If user is trying to access a protected area, check if any of their active-ish plans need payment
             $subscriptions = $user->activeSubscriptions;
+            if($user->activeSubscription){
+                return $next($request);
+            }
 
             foreach ($subscriptions as $subscription) {
                 if ($subscription->needsPayment()) {

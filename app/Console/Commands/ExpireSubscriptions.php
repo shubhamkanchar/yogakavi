@@ -13,7 +13,7 @@ class ExpireSubscriptions extends Command
      *
      * @var string
      */
-    protected $signature = 'subscriptions:expire';
+    protected $signature = 'subscriptions:expire {--chunk=1000 : Number of subscriptions to process per batch}';
 
     /**
      * The console command description.
@@ -25,39 +25,57 @@ class ExpireSubscriptions extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): int
     {
         $this->info('Checking for expired subscriptions...');
+        $now = now();
+        $chunkSize = max(1, (int) $this->option('chunk'));
 
-        // 1. Handle Active Subscriptions that have expired
-        $expiredActive = Subscription::with(['user', 'plan'])
-            ->where('status', 'active')
-            ->where('expiry_date', '<', now())
-            ->get();
+        $expiredActiveCount = $this->updateExpiredSubscriptions(
+            status: 'active',
+            dateColumn: 'expiry_date',
+            newStatus: 'expired',
+            now: $now,
+            chunkSize: $chunkSize,
+        );
 
-        foreach ($expiredActive as $sub) {
-            $sub->update(['status' => 'expired']);
+        $expiredTrialCount = $this->updateExpiredSubscriptions(
+            status: 'trial',
+            dateColumn: 'trial_ends_at',
+            newStatus: 'pending_payment',
+            now: $now,
+            chunkSize: $chunkSize,
+        );
 
-            $user = $sub->user;
-            if ($user && $sub->plan) {
-                $type = $sub->plan->type;
+        $message = "Expiration check complete. Expired active subscriptions: {$expiredActiveCount}. Trials moved to pending payment: {$expiredTrialCount}.";
 
-                $this->info("Expired active subscription {$sub->id} for user {$user->id} (Plan: {$type})");
-            }
-        }
+        $this->info($message);
+        Log::info($message);
 
-        // 2. Handle Trial Subscriptions that have ended
-        $expiredTrials = Subscription::with(['user', 'plan'])
-            ->where('status', 'trial')
-            ->where('trial_ends_at', '<', now())
-            ->get();
+        return self::SUCCESS;
+    }
 
-        foreach ($expiredTrials as $trial) {
-            $trial->update(['status' => 'pending_payment']);
-            $this->info("Trial ended for subscription {$trial->id} - moved to pending_payment.");
-        }
+    private function updateExpiredSubscriptions(
+        string $status,
+        string $dateColumn,
+        string $newStatus,
+        $now,
+        int $chunkSize
+    ): int {
+        $updated = 0;
 
-        $this->info('Expiration check complete.');
-        Log::info('Expiration check complete.');
+        Subscription::query()
+            ->where('status', $status)
+            ->where($dateColumn, '<', $now)
+            ->select('id')
+            ->chunkById($chunkSize, function ($subscriptions) use (&$updated, $status, $dateColumn, $newStatus, $now) {
+                $updated += Subscription::query()
+                    ->whereKey($subscriptions->pluck('id'))
+                    ->where('status', $status)
+                    ->where($dateColumn, '<', $now)
+                    ->update(['status' => $newStatus]);
+            });
+
+        return $updated;
     }
 }

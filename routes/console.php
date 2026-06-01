@@ -9,4 +9,6 @@ Artisan::command('inspire', function () {
 
 use Illuminate\Support\Facades\Schedule;
 
-Schedule::command('subscriptions:expire')->daily();
+Schedule::command('subscriptions:expire')
+    ->everyFiveMinutes()
+    ->withoutOverlapping();
