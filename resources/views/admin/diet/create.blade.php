@@ -127,7 +127,7 @@
                 <a href="{{ route('admin.users.index') }}" class="btn btn-light fw-semibold">
                     <i class="bi bi-arrow-left"></i> Back
                 </a>
-                <button type="button" class="btn-save btn" id="saveDiet">
+                <button type="button" class="btn-primary btn" id="saveDiet">
                     <i class="bi bi-floppy-fill me-1"></i> Save Diet Plan
                 </button>
             </div>
