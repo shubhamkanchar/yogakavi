@@ -76,6 +76,10 @@ class DashboardController extends Controller
         $expiringDietPlans = \App\Models\DietPlan::whereIn('id', $latestDietPlanIds)
             ->whereNotNull('end_date')
             ->whereDate('end_date', '<=', now()->addDays(2)->toDateString())
+            ->whereHas('user.subscriptions', function ($query) {
+                $query->where('status', 'active')
+                    ->where('plan_type', 'diet');
+            })
             ->orderBy('end_date')
             ->with('user')
             ->get();
